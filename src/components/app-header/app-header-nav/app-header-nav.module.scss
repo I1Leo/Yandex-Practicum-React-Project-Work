@@ -1,0 +1,20 @@
+.nav {
+	justify-content: center;
+	width: 100%;
+}
+
+.list {
+	display: grid;
+	grid-template-columns: minmax(auto, 178px) minmax(auto, 197px) 1fr minmax(
+			auto,
+			207px
+		);
+	align-items: center;
+	gap: 8px;
+}
+
+.logo_item {
+	display: flex;
+	align-items: center;
+	padding-left: 104px;
+}

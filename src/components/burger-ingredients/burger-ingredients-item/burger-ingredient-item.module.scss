@@ -1,0 +1,23 @@
+.item {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 4px;
+}
+
+.img_container {
+	display: flex;
+	justify-content: center;
+}
+
+.price_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.name {
+	flex-grow: 1;
+	text-align: center;
+}

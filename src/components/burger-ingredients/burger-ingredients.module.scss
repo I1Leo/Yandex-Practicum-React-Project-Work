@@ -1,0 +1,12 @@
+.tabs {
+	display: flex;
+
+	li {
+		flex-grow: 1;
+	}
+}
+
+.sections_container {
+	max-height: 710px;
+	overflow-y: scroll;
+}
