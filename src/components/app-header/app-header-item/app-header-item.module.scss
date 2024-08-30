@@ -1,0 +1,12 @@
+.item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: #8585ad;
+	background-color: #1c1c21;
+	border-radius: 40px;
+}
+
+.isActive {
+	color: #f2f2f3;
+}
