@@ -9,7 +9,7 @@ export default function OrderDetails() {
 			</p>
 			<p className='text text_type_main-medium pb-15'>идентификатор заказа</p>
 			<div className='pb-15'>
-				<img src={DoneIcon} alt='' />
+				<img src={DoneIcon} alt="done icon" />
 			</div>
 			<p className='text text_type_main-default pb-2'>
 				Ваш заказ начали готовить

@@ -41,7 +41,7 @@ export const App = () => {
 			.then((data) => {
 				setBurgerIngridents(data.data);
 			})
-			.catch((e) => console.error(e));
+			.catch(console.error);
 	}, []);
 
 	return (
@@ -49,22 +49,19 @@ export const App = () => {
 			<AppHeader />
 			<main className={s.main}>
 				{isModalActive && (
-					<>
-						<ModalOverlay onChange={setIsModalActive} />
-						<Modal
-							onChange={setIsModalActive}
-							title={modalType === 'ingredient' ? 'Детали ингредиента' : ''}>
-							{modalType === 'ingredient' ? (
-								<IngredientDetails
-									ingredient={burgerIngredients.find(
-										(ingredient) => ingredient.name === activeIngredient
-									)}
-								/>
-							) : (
-								<OrderDetails />
-							)}
-						</Modal>
-					</>
+					<Modal
+						onChange={setIsModalActive}
+						title={modalType === 'ingredient' ? 'Детали ингредиента' : ''}>
+						{modalType === 'ingredient' ? (
+							<IngredientDetails
+								ingredient={burgerIngredients.find(
+									(ingredient) => ingredient.name === activeIngredient
+								)}
+							/>
+						) : (
+							<OrderDetails />
+						)}
+					</Modal>
 				)}
 				<BurgerIngredients
 					ingredients={burgerIngredients}

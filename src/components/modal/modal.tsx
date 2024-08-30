@@ -2,6 +2,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './modal.module.scss';
 import { Dispatch, ReactNode, SetStateAction, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 
 type ModalType = {
 	children: ReactNode;
@@ -29,16 +30,18 @@ export default function Modal({ children, title, onChange }: ModalType) {
 	if (!modalRoot) return null;
 
 	return createPortal(
-		<div className={`${s.modal} pt-10 pr-10 pb-15 pl-10`}>
-			<div className={s.modal_header}>
-				<h2 className={`${s.title} text text_type_main-large`}>{title}</h2>
-				<button className={`${s.close_btn}`} onClick={() => onChange(false)}>
-					<CloseIcon type='primary' />
-				</button>
+		<>
+			<ModalOverlay onChange={onChange} />
+			<div className={`${s.modal} pt-10 pr-10 pb-15 pl-10`}>
+				<div className={s.modal_header}>
+					<h2 className={`${s.title} text text_type_main-large`}>{title}</h2>
+					<button className={`${s.close_btn}`} onClick={() => onChange(false)}>
+						<CloseIcon type='primary' />
+					</button>
+				</div>
+				{children}
 			</div>
-			{children}
-		</div>,
-
+		</>,
 		modalRoot
 	);
 }

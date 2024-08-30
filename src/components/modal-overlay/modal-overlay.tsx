@@ -8,7 +8,7 @@ type ModalOverlayType = {
 export default function ModalOverlay({ onChange }: ModalOverlayType) {
 	const handleClick = () => onChange(false);
 	const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-		if (event.key === 'Enter' || event.key === ' ') {
+		if (event.key === ' ') {
 			handleClick();
 		}
 	};
