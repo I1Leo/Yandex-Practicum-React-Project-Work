@@ -2,23 +2,66 @@ import {
 	Counter,
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { BurgerIngredientType } from '../burger-ingredients-section/burger-ingredients-section';
 import s from './burger-ingredient-item.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../..';
+import { ingredientDetailsSlice } from '../../../services/ingredient-details';
+import { useDrag } from 'react-dnd';
+import { useMemo } from 'react';
+import { IngredientsType } from '../../../services/burger-ingredients';
 
 type BurgerIngredientsItemType = {
-	ingredient: BurgerIngredientType;
-	onChange: (ingredientName: string) => void;
+	ingredient: IngredientsType;
 };
 export default function BurgeringredientsItem({
 	ingredient,
-	onChange,
 }: BurgerIngredientsItemType) {
+	const { ingredients } = useSelector(
+		(state: RootState) => state.root.ingredients
+	);
+	const { bun, constructorIngredients } = useSelector(
+		(state: RootState) => state.root.constructorIngredients
+	);
+
+	const { getIngredientDetails, activateIngredientsDetailsModal } =
+		ingredientDetailsSlice.actions;
+	const dispatch = useDispatch();
+
+	const [, dragRef] = useDrag({
+		type: 'ingredient',
+		item: { ingredient },
+		collect: (monitor) => ({
+			isDragging: monitor.isDragging(),
+		}),
+	});
+
+	function handleClick() {
+		const currentIngredient = ingredients.find(
+			(ingredientName) => ingredientName.name === ingredient.name
+		);
+		if (currentIngredient) {
+			dispatch(getIngredientDetails(currentIngredient));
+			dispatch(activateIngredientsDetailsModal());
+		}
+	}
+
+	const amount = useMemo(() => {
+		if (bun) {
+			return [bun, ...constructorIngredients, bun].filter(
+				(item) => item && item.name === ingredient.name
+			).length;
+		} else {
+			return [...constructorIngredients].filter(
+				(item) => item && item.name === ingredient.name
+			).length;
+		}
+	}, [constructorIngredients, bun]);
+
 	return (
-		<li className={s.item}>
-			<button onClick={() => onChange(ingredient.name)}>
-				{(ingredient.name === 'Краторная булка N-200i' ||
-					ingredient.name === 'Соус традиционный галактический') && (
-					<Counter count={1} size='default' extraClass='m-1' />
+		<li className={s.item} ref={dragRef}>
+			<button onClick={handleClick}>
+				{amount > 0 && (
+					<Counter count={amount} size='default' extraClass='m-1' />
 				)}
 				<div className={s.img_container}>
 					<img src={ingredient.image} alt={ingredient.name} />

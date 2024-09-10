@@ -1,32 +1,19 @@
+import { RefObject } from 'react';
+import { IngredientsType } from '../../../services/burger-ingredients';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import s from './burger-ingredients-section.module.scss';
 
 type BurgerIngredientsSectionType = {
-	ingredient: Array<BurgerIngredientType>;
-	onChange: (ingredientName: string) => void;
-};
-
-export type BurgerIngredientType = {
-	_id: string;
-	name: string;
-	type: string;
-	proteins: number;
-	fat: number;
-	carbohydrates: number;
-	calories: number;
-	price: number;
-	image: string;
-	image_mobile: string;
-	image_large: string;
-	__v: number;
+	ingredient: Array<IngredientsType>;
+	sectionRef: RefObject<HTMLDivElement>;
 };
 
 export default function BurgerIngredientsSection({
 	ingredient,
-	onChange,
+	sectionRef,
 }: BurgerIngredientsSectionType) {
 	return (
-		<section className={`${s.container} pt-6 pr-4 pb-10 pl-4`}>
+		<section className={`${s.container} pt-6 pr-4 pb-10 pl-4`} ref={sectionRef}>
 			<h2 className='text text_type_main-medium'>
 				{ingredient[0].type === 'bun'
 					? 'Булки'
@@ -35,11 +22,10 @@ export default function BurgerIngredientsSection({
 					: 'Начинки'}
 			</h2>
 			<ul className={s.list}>
-				{ingredient.map((ingredient: BurgerIngredientType) => (
+				{ingredient.map((ingredient: IngredientsType) => (
 					<BurgerIngredientsItem
 						key={ingredient.name}
 						ingredient={ingredient}
-						onChange={onChange}
 					/>
 				))}
 			</ul>

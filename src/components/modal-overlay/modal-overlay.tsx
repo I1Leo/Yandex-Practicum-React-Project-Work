@@ -1,15 +1,15 @@
-import { Dispatch, KeyboardEvent, SetStateAction } from 'react';
 import s from './modal-overlay.module.scss';
+import { useDispatch } from 'react-redux';
+import { ingredientDetailsSlice } from '../../services/ingredient-details';
+import { KeyboardEvent } from 'react';
 
-type ModalOverlayType = {
-	onChange: Dispatch<SetStateAction<boolean>>;
-};
+export default function ModalOverlay() {
+	const { deactivateIngredientsDetailsModal } = ingredientDetailsSlice.actions;
+	const dispatch = useDispatch();
 
-export default function ModalOverlay({ onChange }: ModalOverlayType) {
-	const handleClick = () => onChange(false);
-	const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-		if (event.key === ' ') {
-			handleClick();
+	const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+		if (e.key === ' ') {
+			dispatch(deactivateIngredientsDetailsModal());
 		}
 	};
 
@@ -18,7 +18,7 @@ export default function ModalOverlay({ onChange }: ModalOverlayType) {
 			className={s.modal_overlay}
 			role='button'
 			tabIndex={0}
-			onClick={handleClick}
+			onClick={() => dispatch(deactivateIngredientsDetailsModal())}
 			onKeyDown={handleKeyDown}></div>
 	);
 }

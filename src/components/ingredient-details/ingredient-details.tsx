@@ -1,19 +1,20 @@
-import { BurgerIngredientType } from '../burger-ingredients/burger-ingredients-section/burger-ingredients-section';
+import { useSelector } from 'react-redux';
 import s from './ingredient-detail.module.scss';
+import { RootState } from '../..';
 
-export type IngredientDetailsType = {
-	ingredient: BurgerIngredientType | undefined;
-};
+export default function IngredientDetails() {
+	const { ingredientDetails } = useSelector(
+		(state: RootState) => state.root.ingredientDetails
+	);
 
-export default function IngredientDetails({
-	ingredient,
-}: IngredientDetailsType) {
 	return (
 		<>
 			<div className={`${s.img_container} mb-4`}>
-				<img src={ingredient?.image} alt={ingredient?.name} />
+				<img src={ingredientDetails?.image} alt={ingredientDetails?.name} />
 			</div>
-			<p className='text text_type_main-medium pb-8'>{ingredient?.name}</p>
+			<p className='text text_type_main-medium pb-8'>
+				{ingredientDetails?.name}
+			</p>
 			<table>
 				<thead>
 					<tr className='text text_type_main-default text_color_inactive'>
@@ -25,10 +26,10 @@ export default function IngredientDetails({
 				</thead>
 				<tbody>
 					<tr className='text text_type_digits-default text_color_inactive'>
-						<th className='pr-5'>{ingredient?.calories}</th>
-						<th className='pr-5'>{ingredient?.proteins}</th>
-						<th className='pr-5'>{ingredient?.fat}</th>
-						<th>{ingredient?.carbohydrates}</th>
+						<th className='pr-5'>{ingredientDetails?.calories}</th>
+						<th className='pr-5'>{ingredientDetails?.proteins}</th>
+						<th className='pr-5'>{ingredientDetails?.fat}</th>
+						<th>{ingredientDetails?.carbohydrates}</th>
 					</tr>
 				</tbody>
 			</table>

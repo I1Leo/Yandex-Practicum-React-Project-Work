@@ -3,25 +3,79 @@ import {
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './burger-consructor-item.module.scss';
-import { BurgerIngredientType } from '../../burger-ingredients/burger-ingredients-section/burger-ingredients-section';
+import { useDispatch } from 'react-redux';
+import {
+	ConstructorIngredientType,
+	constructorIngredientsSlice,
+} from '../../../services/burger-constructor';
+import { useRef } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
 type BurgerConstructorItemType = {
 	type?: 'top' | 'bottom' | undefined;
-	ingredient: BurgerIngredientType;
+	ingredient: ConstructorIngredientType;
+	index?: number;
+	moveIngredient?: (dragIndex: number, hoverIndex: number) => void;
 };
 
 export default function BurgerConstructorItem({
 	type,
 	ingredient,
+	index,
+	moveIngredient,
 }: BurgerConstructorItemType) {
+	const dispatch = useDispatch();
+	const { deleteIngredient } = constructorIngredientsSlice.actions;
+
+	const handleDelete = () => {
+		if (ingredient.key) {
+			dispatch(deleteIngredient(ingredient.key));
+		}
+	};
+
+	const ref = useRef<HTMLLIElement>(null);
+
+	const [, drag] = useDrag({
+		type: 'constructorIngredient',
+		item: { index },
+		canDrag: ingredient.type !== 'bun',
+	});
+
+	const [, drop] = useDrop({
+		accept: 'constructorIngredient',
+		hover(item: { index: number }, monitor) {
+			if (!ref.current || !moveIngredient) return;
+			const dragIndex = item.index;
+			const hoverIndex = index ?? 0;
+
+			if (dragIndex === hoverIndex) return;
+
+			const hoverBoundingRect = ref.current.getBoundingClientRect();
+			const hoverMiddleY =
+				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+			const clientOffset = monitor.getClientOffset();
+			const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
+
+			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
+			if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
+
+			moveIngredient!(dragIndex, hoverIndex);
+
+			item.index = hoverIndex;
+		},
+	});
+
+	drag(drop(ref));
+
 	return (
-		<li className={`${s.item}`}>
+		<li ref={ref} className={`${s.item}`}>
 			{ingredient.type !== 'bun' && <DragIcon type='primary' />}
 			{ingredient.type !== 'bun' ? (
 				<ConstructorElement
 					text={ingredient.name}
 					price={ingredient.price}
 					thumbnail={ingredient.image}
+					handleClose={() => handleDelete()}
 				/>
 			) : (
 				<div className='pl-8'>

@@ -1,76 +1,41 @@
-import { useState, useEffect } from 'react';
 import s from './app.module.scss';
 import AppHeader from '../components/app-header/app-header';
 import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
-import { BurgerIngredientType } from '../components/burger-ingredients/burger-ingredients-section/burger-ingredients-section';
 import Modal from '../components/modal/modal';
 import IngredientDetails from '../components/ingredient-details/ingredient-details';
+import { useSelector } from 'react-redux';
+import { RootState } from '..';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import OrderDetails from '../components/order-details/order-details';
-import ModalOverlay from '../components/modal-overlay/modal-overlay';
 
 export const App = () => {
-	const [burgerIngredients, setBurgerIngridents] = useState<
-		BurgerIngredientType[]
-	>([]);
-	const [activeIngredient, setActiveIngredient] = useState('');
-	const [isModalActive, setIsModalActive] = useState(false);
-	const [modalType, setModalType] = useState('ingredient');
-
-	const url = 'https://norma.nomoreparties.space/api/ingredients';
-
-	const handleActiveIngredient = (ingredientName: string) => {
-		setActiveIngredient(ingredientName);
-		setIsModalActive(true);
-		setModalType('ingredient');
-	};
-
-	const handleOrder = () => {
-		setIsModalActive(true);
-		setModalType('order');
-	};
-
-	useEffect(() => {
-		fetch(url)
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error(`${res.status}`);
-				}
-				return res.json();
-			})
-			.then((data) => {
-				setBurgerIngridents(data.data);
-			})
-			.catch(console.error);
-	}, []);
+	const { isIngredientDetailsModalActive } = useSelector(
+		(state: RootState) => state.root.ingredientDetails
+	);
+	const { orderRequest, orderFailed, isOrderDetailsModalActive } = useSelector(
+		(state: RootState) => state.root.orderDetails
+	);
 
 	return (
 		<>
 			<AppHeader />
 			<main className={s.main}>
-				{isModalActive && (
-					<Modal
-						onChange={setIsModalActive}
-						title={modalType === 'ingredient' ? 'Детали ингредиента' : ''}>
-						{modalType === 'ingredient' ? (
-							<IngredientDetails
-								ingredient={burgerIngredients.find(
-									(ingredient) => ingredient.name === activeIngredient
-								)}
-							/>
-						) : (
-							<OrderDetails />
-						)}
+				{isIngredientDetailsModalActive && (
+					<Modal title='Детали ингредиента'>
+						<IngredientDetails />
 					</Modal>
 				)}
-				<BurgerIngredients
-					ingredients={burgerIngredients}
-					onChange={handleActiveIngredient}
-				/>
-				<BurgerConstructor
-					ingredients={burgerIngredients}
-					onChange={handleOrder}
-				/>
+				{!orderRequest && !orderFailed && isOrderDetailsModalActive && (
+					<Modal title=''>
+						<OrderDetails />
+					</Modal>
+				)}
+				<DndProvider backend={HTML5Backend}>
+					<BurgerIngredients />
+					<BurgerConstructor />
+				</DndProvider>
 			</main>
 		</>
 	);
