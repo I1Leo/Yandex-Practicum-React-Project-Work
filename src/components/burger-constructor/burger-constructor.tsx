@@ -4,8 +4,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './burger-constructor.module.scss';
 import BurgerConstructorItem from './burger-constructor-item/burger-constructor-item';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../..';
 import { useDrop } from 'react-dnd';
 import {
 	ConstructorIngredientType,
@@ -15,13 +13,15 @@ import { useCallback, useMemo } from 'react';
 import { getOrder } from '../../services/api';
 import { orderDetailsSlice } from '../../services/order-details';
 import { IngredientsType } from '../../services/burger-ingredients';
+import { BASE_URL } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 export default function BurgerConstructor() {
-	const { bun, constructorIngredients } = useSelector(
-		(state: RootState) => state.root.constructorIngredients
+	const { bun, constructorIngredients } = useAppSelector(
+		(state) => state.root.constructorIngredients
 	);
 
-	const dispatch = useDispatch<AppDispatch>();
+	const dispatch = useAppDispatch();
 	const { addBun, addIngredient, setIngredients, resetIngredients } =
 		constructorIngredientsSlice.actions;
 	const { activateOrderDetailsModal } = orderDetailsSlice.actions;
@@ -95,8 +95,6 @@ export default function BurgerConstructor() {
 				: 'none',
 	};
 
-	const url = 'https://norma.nomoreparties.space/api/orders';
-
 	const ingredientsIds = useMemo(() => {
 		if (bun) {
 			return [bun, ...constructorIngredients, bun].map((item) => item._id);
@@ -106,7 +104,7 @@ export default function BurgerConstructor() {
 	}, [bun, constructorIngredients]);
 
 	const handleClick = () => {
-		dispatch(getOrder({ url, ingredientsIds }));
+		dispatch(getOrder({ url: `${BASE_URL}/orders`, ingredientsIds }));
 		dispatch(activateOrderDetailsModal());
 		dispatch(resetIngredients());
 	};
@@ -164,7 +162,8 @@ export default function BurgerConstructor() {
 					htmlType='button'
 					type='primary'
 					size='large'
-					onClick={() => handleClick()}>
+					onClick={() => handleClick()}
+					disabled={bun ? false : true}>
 					Оформить заказ
 				</Button>
 			</div>

@@ -3,27 +3,20 @@ import s from './modal.module.scss';
 import { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import { useDispatch } from 'react-redux';
-import { ingredientDetailsSlice } from '../../services/ingredient-details';
-import { orderDetailsSlice } from '../../services/order-details';
 
 type ModalType = {
 	children: ReactNode;
 	title: string;
+	onClose: () => void;
 };
 
 const modalRoot = document.getElementById('modals');
 
-export default function Modal({ children, title }: ModalType) {
-	const { deactivateIngredientsDetailsModal } = ingredientDetailsSlice.actions;
-	const { deactivateOrderDetailsModal } = orderDetailsSlice.actions;
-	const dispatch = useDispatch();
-
+export default function Modal({ children, title, onClose }: ModalType) {
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === 'Escape') {
-				dispatch(deactivateIngredientsDetailsModal());
-				dispatch(deactivateOrderDetailsModal());
+				onClose();
 			}
 		};
 
@@ -32,22 +25,17 @@ export default function Modal({ children, title }: ModalType) {
 		return () => {
 			window.removeEventListener('keydown', handleEsc);
 		};
-	}, [dispatch]);
-
-	const handleClick = () => {
-		dispatch(deactivateIngredientsDetailsModal());
-		dispatch(deactivateOrderDetailsModal());
-	};
+	}, [onClose]);
 
 	if (!modalRoot) return null;
 
 	return createPortal(
 		<>
-			<ModalOverlay />
+			<ModalOverlay onClose={onClose} />
 			<div className={`${s.modal} pt-10 pr-10 pb-15 pl-10`}>
 				<div className={s.modal_header}>
 					<h2 className={`${s.title} text text_type_main-large`}>{title}</h2>
-					<button className={`${s.close_btn}`} onClick={() => handleClick()}>
+					<button className={`${s.close_btn}`} onClick={() => onClose()}>
 						<CloseIcon type='primary' />
 					</button>
 				</div>

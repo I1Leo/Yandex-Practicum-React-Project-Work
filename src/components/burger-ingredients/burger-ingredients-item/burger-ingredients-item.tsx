@@ -3,12 +3,11 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './burger-ingredient-item.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../..';
 import { ingredientDetailsSlice } from '../../../services/ingredient-details';
 import { useDrag } from 'react-dnd';
 import { useMemo } from 'react';
 import { IngredientsType } from '../../../services/burger-ingredients';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 
 type BurgerIngredientsItemType = {
 	ingredient: IngredientsType;
@@ -16,16 +15,14 @@ type BurgerIngredientsItemType = {
 export default function BurgeringredientsItem({
 	ingredient,
 }: BurgerIngredientsItemType) {
-	const { ingredients } = useSelector(
-		(state: RootState) => state.root.ingredients
-	);
-	const { bun, constructorIngredients } = useSelector(
-		(state: RootState) => state.root.constructorIngredients
+	const { ingredients } = useAppSelector((state) => state.root.ingredients);
+	const { bun, constructorIngredients } = useAppSelector(
+		(state) => state.root.constructorIngredients
 	);
 
 	const { getIngredientDetails, activateIngredientsDetailsModal } =
 		ingredientDetailsSlice.actions;
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const [, dragRef] = useDrag({
 		type: 'ingredient',

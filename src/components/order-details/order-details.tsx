@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux';
 import DoneIcon from '../../images/done-icon.png';
 import s from './order-details.module.scss';
-import { RootState } from '../..';
+import { useAppSelector } from '../../hooks';
 
 export default function OrderDetails() {
-	const { order } = useSelector((state: RootState) => state.root.orderDetails);
+	const { order } = useAppSelector((state) => state.root.orderDetails);
 
 	return (
 		<>

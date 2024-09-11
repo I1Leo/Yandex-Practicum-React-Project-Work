@@ -1,57 +1,34 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { checkResponse, checkSuccess } from '../utils/request';
 
 export const getIngredients = createAsyncThunk(
 	'getIngredients',
 	async (url: string) => {
-		try {
-			const response = await fetch(url);
+		const response = await fetch(url).then(checkResponse).then(checkSuccess);
 
-			if (!response.ok) {
-				throw new Error(`${response.status}`);
-			}
-
-			const data = await response.json();
-
-			if (data && data.success) {
-				return data.data;
-			} else {
-				throw new Error('Data error');
-			}
-		} catch (error) {
-			console.error(error);
-			return null;
-		}
+		return response.data;
 	}
 );
 
 export const getOrder = createAsyncThunk(
 	'getOrder',
-	async (
-		{ url, ingredientsIds }: { url: string; ingredientsIds: string[] },
-		thunkAPI
-	) => {
-		try {
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({ ingredients: ingredientsIds }),
-			});
+	async ({
+		url,
+		ingredientsIds,
+	}: {
+		url: string;
+		ingredientsIds: string[];
+	}) => {
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ ingredients: ingredientsIds }),
+		})
+			.then(checkResponse)
+			.then(checkSuccess);
 
-			if (!response.ok) {
-				throw new Error(`${response.status}`);
-			}
-
-			const data = await response.json();
-
-			if (data && data.success) {
-				return data.order.number;
-			} else {
-				throw new Error('Data error');
-			}
-		} catch (error) {
-			return thunkAPI.rejectWithValue(error);
-		}
+		return response.order.number;
 	}
 );

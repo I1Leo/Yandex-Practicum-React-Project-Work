@@ -3,13 +3,13 @@ import {
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './burger-consructor-item.module.scss';
-import { useDispatch } from 'react-redux';
 import {
 	ConstructorIngredientType,
 	constructorIngredientsSlice,
 } from '../../../services/burger-constructor';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { useAppDispatch } from '../../../hooks';
 
 type BurgerConstructorItemType = {
 	type?: 'top' | 'bottom' | undefined;
@@ -24,7 +24,7 @@ export default function BurgerConstructorItem({
 	index,
 	moveIngredient,
 }: BurgerConstructorItemType) {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const { deleteIngredient } = constructorIngredientsSlice.actions;
 
 	const handleDelete = () => {

@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux';
 import s from './ingredient-detail.module.scss';
-import { RootState } from '../..';
+import { useAppSelector } from '../../hooks';
 
 export default function IngredientDetails() {
-	const { ingredientDetails } = useSelector(
-		(state: RootState) => state.root.ingredientDetails
+	const { ingredientDetails } = useAppSelector(
+		(state) => state.root.ingredientDetails
 	);
 
 	return (

@@ -15,14 +15,11 @@ const rootReducer = combineSlices(
 	orderDetailsSlice
 );
 
-const store = configureStore({
+export const store = configureStore({
 	reducer: {
 		root: rootReducer,
 	},
 });
-
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
 
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);

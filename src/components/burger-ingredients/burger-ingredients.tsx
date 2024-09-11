@@ -2,23 +2,19 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useEffect, useRef } from 'react';
 import s from './burger-ingredients.module.scss';
 import BurgerIngredientsSection from './burger-ingredients-section/burger-ingredients-section';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../..';
 import { getIngredients } from '../../services/api';
+import { BASE_URL } from '../../constants';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 export default function BurgerIngredients() {
 	const [current, setCurrent] = useState('Булки');
 
-	const { ingredients } = useSelector(
-		(state: RootState) => state.root.ingredients
-	);
+	const { ingredients } = useAppSelector((state) => state.root.ingredients);
 
-	const dispatch: AppDispatch = useDispatch();
-
-	const url = 'https://norma.nomoreparties.space/api/ingredients';
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(getIngredients(url));
+		dispatch(getIngredients(`${BASE_URL}/ingredients`));
 	}, [dispatch]);
 
 	const burgerBuns = [...ingredients].filter(
