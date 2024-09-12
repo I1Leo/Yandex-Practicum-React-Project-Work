@@ -1,12 +1,30 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './app';
 import './styles.css';
+import { combineSlices, configureStore } from '@reduxjs/toolkit';
+import { ingredientsSlice } from './services/burger-ingredients';
+import { Provider } from 'react-redux';
+import { constructorIngredientsSlice } from './services/burger-constructor';
+import { ingredientDetailsSlice } from './services/ingredient-details';
+import { orderDetailsSlice } from './services/order-details';
+
+const rootReducer = combineSlices(
+	ingredientsSlice,
+	constructorIngredientsSlice,
+	ingredientDetailsSlice,
+	orderDetailsSlice
+);
+
+export const store = configureStore({
+	reducer: {
+		root: rootReducer,
+	},
+});
 
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 root.render(
-	<StrictMode>
+	<Provider store={store}>
 		<App />
-	</StrictMode>
+	</Provider>
 );

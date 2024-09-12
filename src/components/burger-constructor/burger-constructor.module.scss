@@ -6,8 +6,22 @@
 .constructor_list {
 	display: grid;
 	grid-template-columns: 1fr;
-	flex-grow: 1;
 	gap: 16px;
+}
+
+.placeholder {
+	background-color: #1c1c21;
+	border-radius: 40px;
+}
+
+.bun_top {
+	border-top-left-radius: 88px;
+	border-top-right-radius: 88px;
+}
+
+.bun_bottom {
+	border-bottom-left-radius: 88px;
+	border-bottom-right-radius: 88px;
 }
 
 .sublist {
