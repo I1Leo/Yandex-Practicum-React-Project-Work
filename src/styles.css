@@ -15,10 +15,19 @@ ul {
 button {
 	padding: 0;
 	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	line-height: inherit;
 	background: none;
 	border: none;
 
 	&:hover {
 		cursor: pointer;
 	}
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
 }

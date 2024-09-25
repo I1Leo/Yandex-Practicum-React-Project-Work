@@ -8,6 +8,7 @@ import { useDrag } from 'react-dnd';
 import { useMemo } from 'react';
 import { IngredientsType } from '../../../services/burger-ingredients';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 type BurgerIngredientsItemType = {
 	ingredient: IngredientsType;
@@ -23,6 +24,8 @@ export default function BurgeringredientsItem({
 	const { getIngredientDetails, activateIngredientsDetailsModal } =
 		ingredientDetailsSlice.actions;
 	const dispatch = useAppDispatch();
+
+	const location = useLocation();
 
 	const [, dragRef] = useDrag({
 		type: 'ingredient',
@@ -40,6 +43,8 @@ export default function BurgeringredientsItem({
 			dispatch(getIngredientDetails(currentIngredient));
 			dispatch(activateIngredientsDetailsModal());
 		}
+
+		
 	}
 
 	const amount = useMemo(() => {
@@ -56,23 +61,27 @@ export default function BurgeringredientsItem({
 
 	return (
 		<li className={s.item} ref={dragRef}>
-			<button onClick={handleClick}>
-				{amount > 0 && (
-					<Counter count={amount} size='default' extraClass='m-1' />
-				)}
-				<div className={s.img_container}>
-					<img src={ingredient.image} alt={ingredient.name} />
-				</div>
-				<div className={s.price_container}>
-					<p className='text text_type_digits-default pr-1'>
-						{ingredient.price}
+			<Link key={ingredient._id}
+			to={`/ingredients/${ingredient._id}`} state={{background: location}}>
+				<button onClick={handleClick}>
+					{amount > 0 && (
+						<Counter count={amount} size='default' extraClass='m-1' />
+					)}
+					<div className={s.img_container}>
+						<img src={ingredient.image} alt={ingredient.name} />
+					</div>
+					<div className={s.price_container}>
+						<p className='text text_type_digits-default pr-1'>
+							{ingredient.price}
+						</p>
+						<CurrencyIcon type='primary' />
+					</div>
+					<p className={`text text_type_main-default ${s.name}`}>
+						{ingredient.name}
 					</p>
-					<CurrencyIcon type='primary' />
-				</div>
-				<p className={`text text_type_main-default ${s.name}`}>
-					{ingredient.name}
-				</p>
-			</button>
+				</button>
+			</Link>
+
 		</li>
 	);
 }

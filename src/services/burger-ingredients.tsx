@@ -41,9 +41,10 @@ export const ingredientsSlice = createSlice({
 			})
 			.addCase(
 				getIngredients.fulfilled,
-				(state, action: PayloadAction<IngredientsType[]>) => {
+				(state, action) => {
+					const ingredientsData = action.payload as IngredientsType[];
 					state.ingredientsRequest = false;
-					state.ingredients = action.payload;
+					state.ingredients = ingredientsData;
 				}
 			)
 			.addCase(getIngredients.rejected, (state) => {

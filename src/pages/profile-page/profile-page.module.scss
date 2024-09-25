@@ -1,0 +1,44 @@
+.main {
+   padding-top: 120px;
+   max-width: 1240px;
+   margin: 0 auto;
+}
+
+.navigation {
+   width: 320px;
+}
+
+.nav_text {
+   font-size: 24px;
+   line-height: 2.6667;
+}
+
+.text_info {
+   margin-top: -16px;
+}
+
+
+.container {
+   display: flex;
+   gap: 60px;
+}
+
+.form {
+   display: flex;
+   flex-direction: column;
+   gap: 24px;
+}
+
+.form_controls {
+   display: none;
+   gap: 20px;
+   justify-content: flex-end;
+}
+
+.isActive {
+   display: flex;
+}
+
+.cancel_btn {
+   color: #4C4CFF
+}

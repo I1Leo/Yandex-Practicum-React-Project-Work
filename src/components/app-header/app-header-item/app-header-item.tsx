@@ -7,14 +7,14 @@ import s from './app-header-item.module.scss';
 import { Dispatch, SetStateAction } from 'react';
 
 type AppHeaderItemType = {
-	current: string;
+	isActive: boolean
 	icon: string;
 	text: string;
 	onChange: Dispatch<SetStateAction<string>>;
 };
 
 export default function AppHeaderItem({
-	current,
+	isActive,
 	icon,
 	text,
 	onChange,
@@ -24,15 +24,15 @@ export default function AppHeaderItem({
 			className={`${s.item} pt-4 pr-5 pb-4 pl-5`}
 			onClick={() => onChange(text)}>
 			{icon === 'burger' ? (
-				<BurgerIcon type={current === text ? 'primary' : 'secondary'} />
+				<BurgerIcon type={isActive ? 'primary' : 'secondary'} />
 			) : icon === 'list' ? (
-				<ListIcon type={current === text ? 'primary' : 'secondary'} />
+				<ListIcon type={isActive ? 'primary' : 'secondary'} />
 			) : (
-				<ProfileIcon type={current === text ? 'primary' : 'secondary'} />
+				<ProfileIcon type={isActive ? 'primary' : 'secondary'} />
 			)}
 			<p
 				className={`text text_type_main-default ${
-					current === text ? s.isActive : ''
+					isActive ? s.isActive : ''
 				}`}>
 				{text}
 			</p>
