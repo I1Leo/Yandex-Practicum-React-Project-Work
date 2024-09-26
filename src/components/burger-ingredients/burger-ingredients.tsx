@@ -10,13 +10,7 @@ export default function BurgerIngredients() {
 	const [current, setCurrent] = useState('Булки');
 
 	const { ingredients } = useAppSelector((state) => state.root.ingredients);
-
-	const dispatch = useAppDispatch();
-
-	useEffect(() => {
-		dispatch(getIngredients(`${BASE_URL}/ingredients`));
-	}, [dispatch]);
-
+	
 	const burgerBuns = [...ingredients].filter(
 		(ingredient) => ingredient.type === 'bun'
 	);

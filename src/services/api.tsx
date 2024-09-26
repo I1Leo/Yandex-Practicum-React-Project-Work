@@ -36,19 +36,9 @@ export const getOrder = createAsyncThunk(
 	}
 );
 
-export const login = createAsyncThunk (
-	'auth/login',
-	async (form: loginFormType)  => {
-		return api.login(form)
-	}
-)
+export const login = createAsyncThunk('auth/login', api.login);
 
-export const logout = createAsyncThunk (
-	'auth/logout',
-	async () => {
-		return api.logout()
-	}
-)
+export const logout = createAsyncThunk('auth/logout', api.logout);
 
 export const setUser = createAction <UserType>("auth/setUser");
 

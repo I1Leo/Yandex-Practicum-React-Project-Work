@@ -1,9 +1,7 @@
 import s from './ingredient-detail.module.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { BASE_URL } from '../../constants';
-import { getIngredients } from '../../services/api';
+
 
 export default function IngredientDetails() {
 	const { ingredientDetails } = useAppSelector(
@@ -12,20 +10,10 @@ export default function IngredientDetails() {
 
 	const { ingredientId } = useParams();
 
-	if (ingredientId) {
-		const dispatch = useAppDispatch();
-
-		useEffect(() => {
-			dispatch(getIngredients(`${BASE_URL}/ingredients`));
-		}, [dispatch]);
-	}
-
 	const ingredients = useAppSelector(state => state.root.ingredients.ingredients)
 	const currentIngredient = ingredients.filter(ingredient => ingredient._id === ingredientId)[0];
 
-
 	return (
-
 		<>
 			{
 				!ingredientId ?

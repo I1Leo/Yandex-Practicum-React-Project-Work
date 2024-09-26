@@ -20,7 +20,7 @@ export default function LoginPage() {
       "password": password, 
     }
 
-   const handleClick = async (e) => {
+   const handleSubmit = async (e) => {
       e.preventDefault();
 
       const form = {
@@ -34,7 +34,7 @@ export default function LoginPage() {
 
    return (
          <main className={s.main}>
-            <form action=""  className={`${s.form} pb-20`} onSubmit={handleClick}>
+            <form action=""  className={`${s.form} pb-20`} onSubmit={handleSubmit}>
                <p className="text text_type_main-medium">Вход</p>
                <Input type={'text'} value={email} onChange={e => setEmail(e.target.value)} placeholder={'E-mail'} size={'default'} extraClass="ml-1"/>
                <PasswordInput value={password} onChange={e => setPassword(e.target.value)} extraClass="mb-2"/>

@@ -3,12 +3,10 @@ import { IngredientsType } from './burger-ingredients';
 
 type InitialStateType = {
 	ingredientDetails: IngredientsType | null;
-	isIngredientDetailsModalActive: boolean;
 };
 
 const initialState: InitialStateType = {
 	ingredientDetails: null,
-	isIngredientDetailsModalActive: false,
 };
 
 export const ingredientDetailsSlice = createSlice({
@@ -17,12 +15,6 @@ export const ingredientDetailsSlice = createSlice({
 	reducers: {
 		getIngredientDetails(state, action: PayloadAction<IngredientsType>) {
 			state.ingredientDetails = action.payload;
-		},
-		activateIngredientsDetailsModal(state) {
-			state.isIngredientDetailsModalActive = true;
-		},
-		deactivateIngredientsDetailsModal(state) {
-			state.isIngredientDetailsModalActive = false;
 		},
 	},
 });

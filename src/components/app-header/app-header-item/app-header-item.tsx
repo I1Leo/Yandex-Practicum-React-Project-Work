@@ -10,19 +10,16 @@ type AppHeaderItemType = {
 	isActive: boolean
 	icon: string;
 	text: string;
-	onChange: Dispatch<SetStateAction<string>>;
 };
 
 export default function AppHeaderItem({
 	isActive,
 	icon,
 	text,
-	onChange,
 }: AppHeaderItemType) {
 	return (
 		<button
-			className={`${s.item} pt-4 pr-5 pb-4 pl-5`}
-			onClick={() => onChange(text)}>
+			className={`${s.item} pt-4 pr-5 pb-4 pl-5`}>
 			{icon === 'burger' ? (
 				<BurgerIcon type={isActive ? 'primary' : 'secondary'} />
 			) : icon === 'list' ? (

@@ -7,12 +7,14 @@ import ProfilePage from '../pages/profile-page/profile-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 import { OnlyAuth, OnlyUnAuth } from '../components/protected-route/protected-route';
 import { useEffect } from 'react';
-import { checkUserAuth } from '../services/api';
+import { checkUserAuth, getIngredients } from '../services/api';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import OrderPage from '../pages/order-page/order-page';
 import AppHeader from '../components/app-header/app-header';
 import Main from '../components/main/main';
 import IngredientDetails from '../components/ingredient-details/ingredient-details';
+import Modal from '../components/modal/modal';
+import { BASE_URL } from '../constants';
 
 export const App = () => {
 
@@ -22,8 +24,18 @@ export const App = () => {
 		dispatch(checkUserAuth());
 	}, []);
 
+	useEffect(() => {
+		dispatch(getIngredients(`${BASE_URL}/ingredients`));
+	}, [dispatch]);
+
 	const location = useLocation();
 	const background = location.state && location.state.background;
+
+	const navigate = useNavigate();
+
+   const handleCloseIngredientsDetails = () => {
+      navigate("/");
+   };
 
 	return (
 		<>
@@ -40,7 +52,13 @@ export const App = () => {
 				</Route>
 				<Route path="*" element={<NotFoundPage />} />
 			</Routes>
-
+			{
+				background && (
+					<Routes>
+						<Route path="/ingredients/:ingredientId" element={<Modal title='Детали ингредиента' onClose={handleCloseIngredientsDetails}><IngredientDetails /></Modal>} />
+					</Routes>
+				)
+			}
 		</>
 	);
 };

@@ -2,19 +2,14 @@ import { Dispatch, SetStateAction, useEffect } from 'react';
 import AppHeaderItem from '../app-header-item/app-header-item';
 import s from './app-header-nav.module.scss';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { checkUserAuth } from '../../../services/api';
-import Preload from '../../preload/preload';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../hooks';
 
-type AppHeaderNavType = {
-	current: string;
-	onChange: Dispatch<SetStateAction<string>>;
-};
-
-export default function AppHeaderNav({ current, onChange }: AppHeaderNavType) {
+export default function AppHeaderNav() {
 	
 	let user = useAppSelector(state => state.root.auth.user);
+
+	const navigate = useNavigate();
 
 	return (
 		<nav className={s.nav}>
@@ -26,12 +21,9 @@ export default function AppHeaderNav({ current, onChange }: AppHeaderNavType) {
 								isActive={isActive}
 								icon='burger'
 								text='Конструктор'
-								onChange={onChange}
 							/>
 						)}
-
 					</NavLink>
-
 				</li>
 				<li>
 					<NavLink to="/orders">
@@ -40,14 +32,15 @@ export default function AppHeaderNav({ current, onChange }: AppHeaderNavType) {
 								isActive={isActive}
 								icon='list'
 								text='Лента заказов'
-								onChange={onChange}
 							/>
 						)}
 					</NavLink>
 
 				</li>
 				<li className={s.logo_item}>
-					<Logo />
+					<button onClick={() => navigate("/")}>
+						<Logo />
+					</button>
 				</li>
 				<li> 
 					<NavLink to="/profile">
@@ -56,7 +49,6 @@ export default function AppHeaderNav({ current, onChange }: AppHeaderNavType) {
 								isActive={isActive}
 								icon='profile'
 								text={user ? user.name : 'Личный кабинет'}
-								onChange={onChange}
 							/>
 						)}
 

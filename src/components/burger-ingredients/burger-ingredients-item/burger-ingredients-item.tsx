@@ -21,7 +21,7 @@ export default function BurgeringredientsItem({
 		(state) => state.root.constructorIngredients
 	);
 
-	const { getIngredientDetails, activateIngredientsDetailsModal } =
+	const { getIngredientDetails } =
 		ingredientDetailsSlice.actions;
 	const dispatch = useAppDispatch();
 
@@ -41,7 +41,6 @@ export default function BurgeringredientsItem({
 		);
 		if (currentIngredient) {
 			dispatch(getIngredientDetails(currentIngredient));
-			dispatch(activateIngredientsDetailsModal());
 		}
 
 		

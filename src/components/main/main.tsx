@@ -9,43 +9,23 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ingredientDetailsSlice } from '../../services/ingredient-details';
 import { orderDetailsSlice } from '../../services/order-details';
 import s from "./main.module.scss"
-import { useNavigate } from 'react-router-dom';
 
 
 export default function Main() {
 
-   const { isIngredientDetailsModalActive } = useAppSelector(
-      (state) => state.root.ingredientDetails
-   );
    const { orderRequest, orderFailed, isOrderDetailsModalActive } =
       useAppSelector((state) => state.root.orderDetails);
 
 
-   const { deactivateIngredientsDetailsModal } = ingredientDetailsSlice.actions;
    const { deactivateOrderDetailsModal } = orderDetailsSlice.actions;
    const dispatch = useAppDispatch();
 
    const handleClose = () => {
-      dispatch(deactivateIngredientsDetailsModal());
       dispatch(deactivateOrderDetailsModal());
-
-   };
-
-   const navigate = useNavigate();
-
-   const handleCloseIngredientsDetails = () => {
-      dispatch(deactivateIngredientsDetailsModal());
-      dispatch(deactivateOrderDetailsModal());
-      navigate("/");
    };
 
    return (
       <main className={s.main}>
-         {isIngredientDetailsModalActive && (
-            <Modal title='Детали ингредиента' onClose={handleCloseIngredientsDetails}>
-               <IngredientDetails />
-            </Modal>
-         )}
          {orderRequest && isOrderDetailsModalActive && (
             <Modal title='' onClose={handleClose}>
                <p className='text text_type_main-medium'>Оформление заказа...</p>
