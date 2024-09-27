@@ -2,8 +2,11 @@ import s from './ingredient-detail.module.scss';
 import { useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 
+type IngredientDetailsType = {
+	isTitle?: boolean
+}
 
-export default function IngredientDetails() {
+export default function IngredientDetails({isTitle = false} : IngredientDetailsType) {
 	const { ingredientDetails } = useAppSelector(
 		(state) => state.root.ingredientDetails
 	);
@@ -16,7 +19,7 @@ export default function IngredientDetails() {
 	return (
 		<>
 			{
-				!ingredientId ?
+				!isTitle ?
 					<>
 						<div className={`${s.img_container} mb-4`}>
 							<img src={ingredientDetails?.image} alt={ingredientDetails?.name} />
