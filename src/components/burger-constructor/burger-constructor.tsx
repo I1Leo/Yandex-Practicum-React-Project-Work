@@ -15,6 +15,8 @@ import { orderDetailsSlice } from '../../services/order-details';
 import { IngredientsType } from '../../services/burger-ingredients';
 import { BASE_URL } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { authSlice } from '../../services/auth';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function BurgerConstructor() {
 	const { bun, constructorIngredients } = useAppSelector(
@@ -25,6 +27,8 @@ export default function BurgerConstructor() {
 	const { addBun, addIngredient, setIngredients, resetIngredients } =
 		constructorIngredientsSlice.actions;
 	const { activateOrderDetailsModal } = orderDetailsSlice.actions;
+
+	const user = useAppSelector(state => state.root.auth.user)
 
 	const [{ isOver, draggingItem }, dropRef] = useDrop({
 		accept: 'ingredient',
@@ -103,7 +107,15 @@ export default function BurgerConstructor() {
 		}
 	}, [bun, constructorIngredients]);
 
+	const navigate = useNavigate();
+
 	const handleClick = () => {
+		
+		if (!user) {
+			navigate('/login');
+			return
+		}
+
 		dispatch(getOrder({ url: `${BASE_URL}/orders`, ingredientsIds }));
 		dispatch(activateOrderDetailsModal());
 		dispatch(resetIngredients());

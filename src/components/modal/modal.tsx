@@ -13,6 +13,9 @@ type ModalType = {
 const modalRoot = document.getElementById('modals');
 
 export default function Modal({ children, title, onClose }: ModalType) {
+	
+	
+
 	useEffect(() => {
 		const handleEsc = (event: KeyboardEvent) => {
 			if (event.key === 'Escape') {
