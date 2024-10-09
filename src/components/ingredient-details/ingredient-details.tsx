@@ -1,9 +1,6 @@
 import s from './ingredient-detail.module.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-import { BASE_URL } from '../../constants';
-import { getIngredients } from '../../services/api';
 import { TIngredients } from '../../services/burger-ingredients';
 
 type TIngredientDetails = {
@@ -16,14 +13,6 @@ export default function IngredientDetails({ isTitle }: TIngredientDetails): JSX.
 	);
 
 	const { ingredientId } = useParams();
-
-	if (ingredientId) {
-		const dispatch = useAppDispatch();
-
-		useEffect(() => {
-			dispatch(getIngredients(`${BASE_URL}/ingredients`));
-		}, [dispatch]);
-	}
 
 	const ingredients = useAppSelector(state => state.root.ingredients.ingredients)
 	const currentIngredient = ingredients.filter((ingredient: TIngredients): boolean => ingredient._id === ingredientId)[0];

@@ -1,15 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
 import AppHeaderItem from '../app-header-item/app-header-item';
 import s from './app-header-nav.module.scss';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks';
 
-type TAppHeaderNav = {
-	onChange: Dispatch<SetStateAction<string>>;
-};
 
-export default function AppHeaderNav({ onChange }: TAppHeaderNav) : JSX.Element{
+export default function AppHeaderNav() : JSX.Element{
 	
 	let user = useAppSelector(state => state.root.auth.user);
 
@@ -23,7 +19,6 @@ export default function AppHeaderNav({ onChange }: TAppHeaderNav) : JSX.Element{
 								isActive={isActive}
 								icon='burger'
 								text='Конструктор'
-								onChange={onChange}
 							/>
 						)}
 
@@ -37,7 +32,6 @@ export default function AppHeaderNav({ onChange }: TAppHeaderNav) : JSX.Element{
 								isActive={isActive}
 								icon='list'
 								text='Лента заказов'
-								onChange={onChange}
 							/>
 						)}
 					</NavLink>
@@ -53,7 +47,6 @@ export default function AppHeaderNav({ onChange }: TAppHeaderNav) : JSX.Element{
 								isActive={isActive}
 								icon='profile'
 								text={user ? user.name : 'Личный кабинет'}
-								onChange={onChange}
 							/>
 						)}
 
