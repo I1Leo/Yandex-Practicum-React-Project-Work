@@ -6,15 +6,16 @@ import s from './burger-ingredient-item.module.scss';
 import { ingredientDetailsSlice } from '../../../services/ingredient-details';
 import { useDrag } from 'react-dnd';
 import { useMemo } from 'react';
-import { IngredientsType } from '../../../services/burger-ingredients';
+import { TIngredients } from '../../../services/burger-ingredients';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { Link, useLocation } from 'react-router-dom';
 
-type BurgerIngredientsItemType = {
-	ingredient: IngredientsType;
+type TBurgerIngredientsItem = {
+	ingredient: TIngredients;
 };
 export default function BurgeringredientsItem({
 	ingredient,
-}: BurgerIngredientsItemType) {
+}: TBurgerIngredientsItem) : JSX.Element {
 	const { ingredients } = useAppSelector((state) => state.root.ingredients);
 	const { bun, constructorIngredients } = useAppSelector(
 		(state) => state.root.constructorIngredients
@@ -24,6 +25,8 @@ export default function BurgeringredientsItem({
 		ingredientDetailsSlice.actions;
 	const dispatch = useAppDispatch();
 
+	const location = useLocation();
+
 	const [, dragRef] = useDrag({
 		type: 'ingredient',
 		item: { ingredient },
@@ -32,9 +35,9 @@ export default function BurgeringredientsItem({
 		}),
 	});
 
-	function handleClick() {
+	function handleClick() : void {
 		const currentIngredient = ingredients.find(
-			(ingredientName) => ingredientName.name === ingredient.name
+			(currentIngredient : TIngredients) : boolean => currentIngredient.name === ingredient.name
 		);
 		if (currentIngredient) {
 			dispatch(getIngredientDetails(currentIngredient));
@@ -45,34 +48,38 @@ export default function BurgeringredientsItem({
 	const amount = useMemo(() => {
 		if (bun) {
 			return [bun, ...constructorIngredients, bun].filter(
-				(item) => item && item.name === ingredient.name
+				(item : TIngredients) : boolean => item.name === ingredient.name
 			).length;
 		} else {
 			return [...constructorIngredients].filter(
-				(item) => item && item.name === ingredient.name
+				(item : TIngredients) : boolean => item.name === ingredient.name
 			).length;
 		}
 	}, [constructorIngredients, bun]);
 
 	return (
 		<li className={s.item} ref={dragRef}>
-			<button onClick={handleClick}>
-				{amount > 0 && (
-					<Counter count={amount} size='default' extraClass='m-1' />
-				)}
-				<div className={s.img_container}>
-					<img src={ingredient.image} alt={ingredient.name} />
-				</div>
-				<div className={s.price_container}>
-					<p className='text text_type_digits-default pr-1'>
-						{ingredient.price}
+			<Link key={ingredient._id}
+			to={`/ingredients/${ingredient._id}`} state={{background: location}}>
+				<button onClick={handleClick}>
+					{amount > 0 && (
+						<Counter count={amount} size='default' extraClass='m-1' />
+					)}
+					<div className={s.img_container}>
+						<img src={ingredient.image} alt={ingredient.name} />
+					</div>
+					<div className={s.price_container}>
+						<p className='text text_type_digits-default pr-1'>
+							{ingredient.price}
+						</p>
+						<CurrencyIcon type='primary' />
+					</div>
+					<p className={`text text_type_main-default ${s.name}`}>
+						{ingredient.name}
 					</p>
-					<CurrencyIcon type='primary' />
-				</div>
-				<p className={`text text_type_main-default ${s.name}`}>
-					{ingredient.name}
-				</p>
-			</button>
+				</button>
+			</Link>
+
 		</li>
 	);
 }

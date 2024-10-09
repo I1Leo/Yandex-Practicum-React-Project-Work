@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IngredientsType } from './burger-ingredients';
+import { TIngredients } from './burger-ingredients';
 
-type InitialStateType = {
-	ingredientDetails: IngredientsType | null;
+type TInitialState = {
+	ingredientDetails: TIngredients | null;
 	isIngredientDetailsModalActive: boolean;
 };
 
-const initialState: InitialStateType = {
+const initialState: TInitialState = {
 	ingredientDetails: null,
 	isIngredientDetailsModalActive: false,
 };
@@ -15,7 +15,7 @@ export const ingredientDetailsSlice = createSlice({
 	name: 'ingredientDetails',
 	initialState,
 	reducers: {
-		getIngredientDetails(state, action: PayloadAction<IngredientsType>) {
+		getIngredientDetails(state, action: PayloadAction<TIngredients>) {
 			state.ingredientDetails = action.payload;
 		},
 		activateIngredientsDetailsModal(state) {

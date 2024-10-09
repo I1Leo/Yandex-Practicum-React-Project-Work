@@ -7,12 +7,15 @@ import { Provider } from 'react-redux';
 import { constructorIngredientsSlice } from './services/burger-constructor';
 import { ingredientDetailsSlice } from './services/ingredient-details';
 import { orderDetailsSlice } from './services/order-details';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { authSlice } from './services/auth';
 
 const rootReducer = combineSlices(
 	ingredientsSlice,
 	constructorIngredientsSlice,
 	ingredientDetailsSlice,
-	orderDetailsSlice
+	orderDetailsSlice,
+	authSlice
 );
 
 export const store = configureStore({
@@ -24,7 +27,10 @@ export const store = configureStore({
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 root.render(
-	<Provider store={store}>
-		<App />
-	</Provider>
+	<Router>
+		<Provider store={store}>
+			<App />
+		</Provider>
+	</Router>
+
 );

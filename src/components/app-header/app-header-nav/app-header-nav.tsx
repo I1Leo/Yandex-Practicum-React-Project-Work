@@ -2,42 +2,63 @@ import { Dispatch, SetStateAction } from 'react';
 import AppHeaderItem from '../app-header-item/app-header-item';
 import s from './app-header-nav.module.scss';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink } from 'react-router-dom';
+import { useAppSelector } from '../../../hooks';
 
-type AppHeaderNavType = {
-	current: string;
+type TAppHeaderNav = {
 	onChange: Dispatch<SetStateAction<string>>;
 };
 
-export default function AppHeaderNav({ current, onChange }: AppHeaderNavType) {
+export default function AppHeaderNav({ onChange }: TAppHeaderNav) : JSX.Element{
+	
+	let user = useAppSelector(state => state.root.auth.user);
+
 	return (
 		<nav className={s.nav}>
 			<ul className={s.list}>
 				<li>
-					<AppHeaderItem
-						current={current}
-						icon='burger'
-						text='Конструктор'
-						onChange={onChange}
-					/>
+					<NavLink to="/" >
+						{({ isActive }) => (
+							<AppHeaderItem
+								isActive={isActive}
+								icon='burger'
+								text='Конструктор'
+								onChange={onChange}
+							/>
+						)}
+
+					</NavLink>
+
 				</li>
 				<li>
-					<AppHeaderItem
-						current={current}
-						icon='list'
-						text='Лента заказов'
-						onChange={onChange}
-					/>
+					<NavLink to="/orders">
+						{({ isActive }) => (
+							<AppHeaderItem
+								isActive={isActive}
+								icon='list'
+								text='Лента заказов'
+								onChange={onChange}
+							/>
+						)}
+					</NavLink>
+
 				</li>
 				<li className={s.logo_item}>
 					<Logo />
 				</li>
-				<li>
-					<AppHeaderItem
-						current={current}
-						icon='profile'
-						text='Мой аккаунт'
-						onChange={onChange}
-					/>
+				<li> 
+					<NavLink to="/profile">
+						{({ isActive }) => (
+							<AppHeaderItem
+								isActive={isActive}
+								icon='profile'
+								text={user ? user.name : 'Личный кабинет'}
+								onChange={onChange}
+							/>
+						)}
+
+					</NavLink>
+
 				</li>
 			</ul>
 		</nav>

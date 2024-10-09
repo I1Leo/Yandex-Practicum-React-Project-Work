@@ -6,17 +6,18 @@ import s from './burger-constructor.module.scss';
 import BurgerConstructorItem from './burger-constructor-item/burger-constructor-item';
 import { useDrop } from 'react-dnd';
 import {
-	ConstructorIngredientType,
+	TConstructorIngredient,
 	constructorIngredientsSlice,
 } from '../../services/burger-constructor';
 import { useCallback, useMemo } from 'react';
 import { getOrder } from '../../services/api';
 import { orderDetailsSlice } from '../../services/order-details';
-import { IngredientsType } from '../../services/burger-ingredients';
+import { TIngredients } from '../../services/burger-ingredients';
 import { BASE_URL } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
 
-export default function BurgerConstructor() {
+export default function BurgerConstructor() : JSX.Element {
 	const { bun, constructorIngredients } = useAppSelector(
 		(state) => state.root.constructorIngredients
 	);
@@ -26,9 +27,11 @@ export default function BurgerConstructor() {
 		constructorIngredientsSlice.actions;
 	const { activateOrderDetailsModal } = orderDetailsSlice.actions;
 
+	const user = useAppSelector(state => state.root.auth.user)
+
 	const [{ isOver, draggingItem }, dropRef] = useDrop({
 		accept: 'ingredient',
-		drop: (item: { ingredient: IngredientsType }) => {
+		drop: (item: { ingredient: TIngredients }) => {
 			if (item.ingredient.type === 'bun') {
 				dispatch(addBun(item.ingredient));
 			} else {
@@ -55,7 +58,7 @@ export default function BurgerConstructor() {
 	);
 
 	const renderItem = useCallback(
-		(ingredient: ConstructorIngredientType, index: number) => {
+		(ingredient: TConstructorIngredient, index: number) : JSX.Element => {
 			return (
 				<BurgerConstructorItem
 					key={ingredient.key}
@@ -71,24 +74,25 @@ export default function BurgerConstructor() {
 	const totalPrice = useMemo(() => {
 		if (bun) {
 			return [bun, ...constructorIngredients, bun].reduce(
-				(sum, curr) => sum + curr.price,
+				(sum : number, curr : TIngredients) : number => sum + curr.price,
 				0
 			);
 		} else {
 			return [...constructorIngredients].reduce(
-				(sum, curr) => sum + curr.price,
+				(sum : number, curr : TIngredients) : number => sum + curr.price,
 				0
 			);
 		}
 	}, [bun, constructorIngredients]);
 
-	const bunPlaceholderBorder = {
+	const bunPlaceholderBorder : { border : string } = {
 		border:
 			isOver && draggingItem.ingredient.type === 'bun'
 				? '2px solid #524EFF'
 				: 'none',
 	};
-	const ingredientPlaceholderBorder = {
+
+	const ingredientPlaceholderBorder : {border : string } = {
 		border:
 			isOver && draggingItem.ingredient.type !== 'bun'
 				? '2px solid #524EFF'
@@ -97,13 +101,21 @@ export default function BurgerConstructor() {
 
 	const ingredientsIds = useMemo(() => {
 		if (bun) {
-			return [bun, ...constructorIngredients, bun].map((item) => item._id);
+			return [bun, ...constructorIngredients, bun].map((item : TIngredients) : string => item._id);
 		} else {
-			return [...constructorIngredients].map((item) => item._id);
+			return [...constructorIngredients].map((item : TIngredients) : string => item._id);
 		}
 	}, [bun, constructorIngredients]);
 
+	const navigate = useNavigate();
+
 	const handleClick = () => {
+		
+		if (!user) {
+			navigate('/login');
+			return
+		}
+
 		dispatch(getOrder({ url: `${BASE_URL}/orders`, ingredientsIds }));
 		dispatch(activateOrderDetailsModal());
 		dispatch(resetIngredients());

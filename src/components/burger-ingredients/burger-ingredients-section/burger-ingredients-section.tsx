@@ -1,17 +1,17 @@
 import { RefObject } from 'react';
-import { IngredientsType } from '../../../services/burger-ingredients';
+import { TIngredients } from '../../../services/burger-ingredients';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import s from './burger-ingredients-section.module.scss';
 
-type BurgerIngredientsSectionType = {
-	ingredient: Array<IngredientsType>;
+type TBurgerIngredientsSection= {
+	ingredient: Array<TIngredients>;
 	sectionRef: RefObject<HTMLDivElement>;
 };
 
 export default function BurgerIngredientsSection({
 	ingredient,
 	sectionRef,
-}: BurgerIngredientsSectionType) {
+}: TBurgerIngredientsSection) : JSX.Element {
 	return (
 		<section className={`${s.container} pt-6 pr-4 pb-10 pl-4`} ref={sectionRef}>
 			<h2 className='text text_type_main-medium'>
@@ -22,7 +22,7 @@ export default function BurgerIngredientsSection({
 					: 'Начинки'}
 			</h2>
 			<ul className={s.list}>
-				{ingredient.map((ingredient: IngredientsType) => (
+				{ingredient.map((ingredient: TIngredients) : JSX.Element => (
 					<BurgerIngredientsItem
 						key={ingredient.name}
 						ingredient={ingredient}
