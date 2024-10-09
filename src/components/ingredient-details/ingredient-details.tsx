@@ -6,7 +6,11 @@ import { BASE_URL } from '../../constants';
 import { getIngredients } from '../../services/api';
 import { TIngredients } from '../../services/burger-ingredients';
 
-export default function IngredientDetails() : JSX.Element {
+type TIngredientDetails = {
+	isTitle?: boolean
+}
+
+export default function IngredientDetails({ isTitle }: TIngredientDetails): JSX.Element {
 	const { ingredientDetails } = useAppSelector(
 		(state) => state.root.ingredientDetails
 	);
@@ -22,14 +26,13 @@ export default function IngredientDetails() : JSX.Element {
 	}
 
 	const ingredients = useAppSelector(state => state.root.ingredients.ingredients)
-	const currentIngredient = ingredients.filter((ingredient : TIngredients) : boolean => ingredient._id === ingredientId)[0];
+	const currentIngredient = ingredients.filter((ingredient: TIngredients): boolean => ingredient._id === ingredientId)[0];
 
 
 	return (
-
 		<>
 			{
-				!ingredientId ?
+				!isTitle ?
 					<>
 						<div className={`${s.img_container} mb-4`}>
 							<img src={ingredientDetails?.image} alt={ingredientDetails?.name} />
