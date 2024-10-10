@@ -3,16 +3,16 @@ import s from "./profile-page.module.scss"
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector, useForm } from "../../hooks";
 import { logout, updateUser } from "../../services/api";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, FormEvent, MutableRefObject, SetStateAction, useEffect, useRef, useState } from "react";
 
 
-export default function ProfilePage() {
+export default function ProfilePage() : JSX.Element {
 
    const user = useAppSelector(state => state.root.auth.user);
 
    const { values, handleChange, setValues } = useForm({
-      name: user.name,
-      email: user.email,
+      name: user?.name || "",
+      email: user?.email || "",
       password: "",
    });
 
@@ -20,9 +20,9 @@ export default function ProfilePage() {
    const [isEmailEditable, setIsEmailEditable] = useState(false);
    const [isPasswordEditable, setIsPasswordEditable] = useState(false);
 
-   const nameRef = useRef(null);
-   const emailRef = useRef(null);
-   const passwordRef = useRef(null);
+   const nameRef = useRef<HTMLInputElement | null>(null);
+   const emailRef = useRef<HTMLInputElement | null>(null);
+   const passwordRef = useRef<HTMLInputElement | null>(null);
 
    const dispatch = useAppDispatch();
    const navigate = useNavigate();
@@ -34,21 +34,21 @@ export default function ProfilePage() {
       navigate("/login")
    }
 
-   const handleEdit = (ref, setEditable, isEditable) => {
-      if (isEditable) {
+   const handleEdit = (ref : MutableRefObject<HTMLInputElement | null>, setEditable : Dispatch<SetStateAction<boolean>>, isEditable : boolean) : void => {
+      if (isEditable && ref.current) {
          ref.current.blur();
          setEditable(false);
-      } else {
+      } else if (ref.current) {
          ref.current.focus();
          setEditable(true);
       }
    }
 
 
-   const handleCancel = () => {
+   const handleCancel = () : void => {
       setValues({
-         name: user.name,
-         email: user.email,
+         name: user?.name || "",
+         email: user?.email || "",
          password: ''
       })
       setIsNameEditable(false);
@@ -56,7 +56,7 @@ export default function ProfilePage() {
       setIsPasswordEditable(false);
    }
 
-   const handleSubmit = (e) => {
+   const handleSubmit = (e : FormEvent<HTMLFormElement>) : void => {
       e.preventDefault();
 
       const form = {

@@ -1,11 +1,10 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
 import AppHeaderItem from '../app-header-item/app-header-item';
 import s from './app-header-nav.module.scss';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks';
 
-export default function AppHeaderNav() {
+export default function AppHeaderNav() : JSX.Element {
 	
 	let user = useAppSelector(state => state.root.auth.user);
 

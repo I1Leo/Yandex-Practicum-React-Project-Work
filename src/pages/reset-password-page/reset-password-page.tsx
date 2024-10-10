@@ -1,13 +1,13 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import s from "./reset-password-page.module.scss"
-import { useState } from "react";
+import { FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { NavLink, Navigate } from "react-router-dom";
 import { resetPassword } from "../../utils/api";
 import { useForm } from "../../hooks";
 
 
-export default function ResetPasswordPage() {
+export default function ResetPasswordPage() : JSX.Element {
 
    const {values, handleChange } = useForm({
       newPassword: "",
@@ -16,7 +16,7 @@ export default function ResetPasswordPage() {
 
    const navigate = useNavigate();
 
-   const handleSubmit = async (e) => {
+   const handleSubmit = async (e : FormEvent<HTMLFormElement>) : Promise<void> => {
       e.preventDefault();
 
       const form = {

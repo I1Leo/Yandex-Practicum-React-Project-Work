@@ -1,18 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { login, logout, setUser, updateUser } from "./api"
+import { TForm } from "../utils/api"
 
-type initialStateType = {
-   user: UserType | null
+type TInitialState = {
+   user: TUser | null
    isAuthChecked: boolean
 }
 
-export type UserType = {
-   name: string
-   email: string
-}
+export type TUser = Pick<TForm, "name" | "email">
 
-
-const initialState: initialStateType = {
+const initialState: TInitialState= {
    user: null,
    isAuthChecked: false
 }
@@ -29,17 +26,17 @@ export const authSlice = createSlice({
    extraReducers: (builder) => {
       builder
          .addCase(setUser, (state, action) => {
-            const user = action.payload as UserType;
+            const user = action.payload as TUser;
             state.user = user;
             
          })
          .addCase(updateUser.fulfilled, (state, action) => {
-            const user = action.payload.user as UserType;
+            const user = action.payload.user as TUser;
                state.user = user;
 
          })
          .addCase(login.fulfilled, (state, action) => {
-            const user = action.payload.user as UserType;
+            const user = action.payload.user as TUser;
             state.user = user;
             state.isAuthChecked = true;
          })

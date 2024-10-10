@@ -1,6 +1,6 @@
 import { BASE_URL } from '../constants';
-import { IngredientsType } from '../services/burger-ingredients';
-import { registerResponse } from './api';
+import { TIngredients } from '../services/burger-ingredients';
+import { TRegisterResponse} from './api';
 
 export const checkResponse = (res: Response) => {
 	if (res.ok) {
@@ -9,13 +9,13 @@ export const checkResponse = (res: Response) => {
 	return Promise.reject(`${res.status}`);
 };
 
-export type ApiResponse = {
+export type TApiResponse = {
 	success: boolean;
-	data: IngredientsType[] | registerResponse;
+	data: TIngredients[] | TRegisterResponse;
 	[key: string]: any;
 };
 
-export const checkSuccess = (res: ApiResponse) => {
+export const checkSuccess = (res: TApiResponse) => {
 	if (res.success) {
 		return res;
 	}

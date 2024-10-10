@@ -1,7 +1,7 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import s from "./forgot-password-page.module.scss"
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { FormEvent } from "react";
 import { forgotPassword } from "../../utils/api";
 import { useForm } from "../../hooks";
 
@@ -12,7 +12,7 @@ export default function ForgotPasswordPage() {
 
    const navigate = useNavigate();
 
-   const handleSubmit = async (e) => {
+   const handleSubmit = async (e : FormEvent<HTMLFormElement>) : Promise<void> => {
       e.preventDefault();
       forgotPassword(values.email);
       navigate('/reset-password')

@@ -1,7 +1,7 @@
 import { BASE_URL } from "../constants"
 import { checkResponse, checkSuccess, fetchWithRefresh } from "./request"
 
-export type UserResponse = {
+export type TUserResponse = {
    email: string
    password: string
 }
@@ -25,7 +25,13 @@ export const getUser = async () => {
    })
 }
 
-export const updateUser = async (form: registerFormType) => {
+export type TForm = {
+   email: string
+   password: string
+   name: string
+}
+
+export const updateUser = async (form: TForm) => {
    return await fetchWithRefresh(`${BASE_URL}/auth/user`, {
       method: 'PATCH',
       mode: 'cors',
@@ -63,12 +69,11 @@ export const forgotPassword = async (email: string) => {
       })
 }
 
-export type resetPasswordFormType = {
-   password: string
+export type TResetPasswordForm = Pick<TForm, "password"> & {
    token: string
 }
 
-export const resetPassword = async (form: resetPasswordFormType) => {
+export const resetPassword = async (form: TResetPasswordForm) => {
    return await fetch(`${BASE_URL}/password-reset/reset`, {
       method: 'POST',
       mode: 'cors',
@@ -88,13 +93,7 @@ export const resetPassword = async (form: resetPasswordFormType) => {
       })
 }
 
-export type registerFormType = {
-   email: string
-   password: string
-   name: string
-}
-
-export type registerResponse = {
+export type TRegisterResponse = {
    success: boolean,
    user: {
       email: string
@@ -104,7 +103,7 @@ export type registerResponse = {
    refreshToken: string
 }
 
-export const register = async (form: registerFormType) => {
+export const register = async (form: TForm) => {
    return await fetch(`${BASE_URL}/auth/register`, {
       method: 'POST',
       mode: 'cors',
@@ -121,12 +120,9 @@ export const register = async (form: registerFormType) => {
       .then(checkSuccess)
 }
 
-export type loginFormType = {
-   email: string
-   password: string
-}
+export type TLoginForm = Pick<TForm, "email" | "password">
 
-export const login = async (form: loginFormType) => {
+export const login = async (form: TLoginForm) => {
    return await fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       mode: 'cors',

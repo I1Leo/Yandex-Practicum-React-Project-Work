@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getIngredients } from './api';
 
-export type IngredientsType = {
+export type TIngredients = {
 	_id: string;
 	name: string;
 	type: string;
@@ -14,16 +14,15 @@ export type IngredientsType = {
 	image_mobile: string;
 	image_large: string;
 	__v: number;
-	key?: string;
 };
 
-type InitialStateType = {
+type TInitialState = {
 	ingredientsRequest: boolean;
 	ingredientsFailed: boolean;
-	ingredients: IngredientsType[];
+	ingredients: TIngredients[];
 };
 
-const initialState: InitialStateType = {
+const initialState: TInitialState = {
 	ingredientsRequest: false,
 	ingredientsFailed: false,
 	ingredients: [],
@@ -42,7 +41,7 @@ export const ingredientsSlice = createSlice({
 			.addCase(
 				getIngredients.fulfilled,
 				(state, action) => {
-					const ingredientsData = action.payload as IngredientsType[];
+					const ingredientsData = action.payload as TIngredients[];
 					state.ingredientsRequest = false;
 					state.ingredients = ingredientsData;
 				}

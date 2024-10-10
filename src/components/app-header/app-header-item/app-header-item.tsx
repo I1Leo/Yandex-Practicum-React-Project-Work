@@ -4,9 +4,8 @@ import {
 	ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './app-header-item.module.scss';
-import { Dispatch, SetStateAction } from 'react';
 
-type AppHeaderItemType = {
+type TAppHeaderItem = {
 	isActive: boolean
 	icon: string;
 	text: string;
@@ -16,7 +15,7 @@ export default function AppHeaderItem({
 	isActive,
 	icon,
 	text,
-}: AppHeaderItemType) {
+}: TAppHeaderItem) : JSX.Element {
 	return (
 		<button
 			className={`${s.item} pt-4 pr-5 pb-4 pl-5`}>
