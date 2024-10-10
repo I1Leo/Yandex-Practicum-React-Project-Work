@@ -2,7 +2,7 @@ import DoneIcon from '../../images/done-icon.png';
 import s from './order-details.module.scss';
 import { useAppSelector } from '../../hooks';
 
-export default function OrderDetails() {
+export default function OrderDetails() : JSX.Element {
 	const { order } = useAppSelector((state) => state.root.orderDetails);
 
 	return (

@@ -9,12 +9,22 @@ export type RootState = ReturnType<typeof store.getState>;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export function useForm(inputValues={}) {
-    const [values, setValues] = useState(inputValues);
-  
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const {value, name} = event.target;
-      setValues({...values, [name]: value});
-    };
-    return {values, handleChange, setValues};
-  }
+type TUseForm = {
+  [key: string]: string;
+}
+
+type TUseFormReturn = {
+  values: TUseForm;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  setValues: React.Dispatch<React.SetStateAction<TUseForm>>;
+}
+
+export function useForm(inputValues : TUseForm ={}) : TUseFormReturn {
+   const [values, setValues] = useState(inputValues);
+ 
+   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+     const {value, name} = event.target;
+     setValues({...values, [name]: value});
+   };
+   return {values, handleChange, setValues};
+ }

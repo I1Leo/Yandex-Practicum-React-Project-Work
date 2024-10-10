@@ -1,47 +1,35 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
-import { IngredientsType } from './burger-ingredients';
+import { TIngredients } from './burger-ingredients';
 
-type InitialStateType = {
-	bun: IngredientsType | null;
-	constructorIngredients: IngredientsType[];
+type TInitialState = {
+	bun: TIngredients | null;
+	constructorIngredients: TIngredients[];
 };
 
-const initialState: InitialStateType = {
+const initialState: TInitialState = {
 	bun: null,
 	constructorIngredients: [],
 };
 
-export type ConstructorIngredientType = {
-	_id: string;
-	name: string;
-	type: string;
-	proteins: number;
-	fat: number;
-	carbohydrates: number;
-	calories: number;
-	price: number;
-	image: string;
-	image_mobile: string;
-	image_large: string;
-	__v: number;
-	key?: string;
+export type TConstructorIngredient = TIngredients & {
+	key?: string
 };
 
 export const constructorIngredientsSlice = createSlice({
 	name: 'constructorIngredients',
 	initialState,
 	reducers: {
-		addBun(state, action: PayloadAction<IngredientsType>) {
+		addBun(state, action: PayloadAction<TIngredients>) {
 			state.bun = action.payload;
 		},
 		addIngredient: {
-			reducer: (state, action: PayloadAction<ConstructorIngredientType>) => {
+			reducer: (state, action: PayloadAction<TConstructorIngredient>) => {
 				state.constructorIngredients = [
 					...state.constructorIngredients,
 					action.payload,
 				];
 			},
-			prepare: (item: IngredientsType) => {
+			prepare: (item: TIngredients) => {
 				const key = nanoid();
 				return {
 					payload: {
@@ -54,11 +42,11 @@ export const constructorIngredientsSlice = createSlice({
 		deleteIngredient(state, action: PayloadAction<string>) {
 			state.constructorIngredients = [
 				...state.constructorIngredients.filter(
-					(item) => item.key !== action.payload
+					(item : TConstructorIngredient) => item.key !== action.payload
 				),
 			];
 		},
-		setIngredients(state, action: PayloadAction<ConstructorIngredientType[]>) {
+		setIngredients(state, action: PayloadAction<TConstructorIngredient[]>) {
 			state.constructorIngredients = action.payload;
 		},
 		resetIngredients(state) {

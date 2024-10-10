@@ -6,22 +6,22 @@ import s from './burger-ingredient-item.module.scss';
 import { ingredientDetailsSlice } from '../../../services/ingredient-details';
 import { useDrag } from 'react-dnd';
 import { useMemo } from 'react';
-import { IngredientsType } from '../../../services/burger-ingredients';
+import { TIngredients } from '../../../services/burger-ingredients';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-type BurgerIngredientsItemType = {
-	ingredient: IngredientsType;
+type TBurgerIngredientsItem = {
+	ingredient: TIngredients;
 };
 export default function BurgeringredientsItem({
 	ingredient,
-}: BurgerIngredientsItemType) {
+}: TBurgerIngredientsItem) : JSX.Element {
 	const { ingredients } = useAppSelector((state) => state.root.ingredients);
 	const { bun, constructorIngredients } = useAppSelector(
 		(state) => state.root.constructorIngredients
 	);
 
-	const { getIngredientDetails } =
+	const { getIngredientDetails, activateIngredientsDetailsModal } =
 		ingredientDetailsSlice.actions;
 	const dispatch = useAppDispatch();
 
@@ -35,25 +35,24 @@ export default function BurgeringredientsItem({
 		}),
 	});
 
-	function handleClick() {
+	function handleClick() : void {
 		const currentIngredient = ingredients.find(
-			(ingredientName) => ingredientName.name === ingredient.name
+			(currentIngredient : TIngredients) : boolean => currentIngredient.name === ingredient.name
 		);
 		if (currentIngredient) {
 			dispatch(getIngredientDetails(currentIngredient));
+			dispatch(activateIngredientsDetailsModal());
 		}
-
-		
 	}
 
 	const amount = useMemo(() => {
 		if (bun) {
 			return [bun, ...constructorIngredients, bun].filter(
-				(item) => item && item.name === ingredient.name
+				(item : TIngredients) : boolean => item.name === ingredient.name
 			).length;
 		} else {
 			return [...constructorIngredients].filter(
-				(item) => item && item.name === ingredient.name
+				(item : TIngredients) : boolean => item.name === ingredient.name
 			).length;
 		}
 	}, [constructorIngredients, bun]);

@@ -1,12 +1,13 @@
 import s from './ingredient-detail.module.scss';
 import { useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
+import { TIngredients } from '../../services/burger-ingredients';
 
-type IngredientDetailsType = {
+type TIngredientDetails = {
 	isTitle?: boolean
 }
 
-export default function IngredientDetails({isTitle = false} : IngredientDetailsType) {
+export default function IngredientDetails({isTitle = false} : TIngredientDetails) : JSX.Element {
 	const { ingredientDetails } = useAppSelector(
 		(state) => state.root.ingredientDetails
 	);
@@ -14,7 +15,7 @@ export default function IngredientDetails({isTitle = false} : IngredientDetailsT
 	const { ingredientId } = useParams();
 
 	const ingredients = useAppSelector(state => state.root.ingredients.ingredients)
-	const currentIngredient = ingredients.filter(ingredient => ingredient._id === ingredientId)[0];
+	const currentIngredient = ingredients.filter((ingredient : TIngredients) : boolean => ingredient._id === ingredientId)[0];
 
 	return (
 		<>

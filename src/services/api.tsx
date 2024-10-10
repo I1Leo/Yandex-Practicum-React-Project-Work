@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { checkResponse, checkSuccess } from '../utils/request';
-import { api, loginFormType, registerFormType, registerResponse } from '../utils/api';
-import { setIsAuthChecked, UserType } from './auth';
+import { api, TForm } from '../utils/api';
+import { setIsAuthChecked, TUser} from './auth';
 
 export const getIngredients = createAsyncThunk(
 	'getIngredients',
@@ -40,7 +40,7 @@ export const login = createAsyncThunk('auth/login', api.login);
 
 export const logout = createAsyncThunk('auth/logout', api.logout);
 
-export const setUser = createAction <UserType>("auth/setUser");
+export const setUser = createAction <TUser>("auth/setUser");
 
 export const checkUserAuth = createAsyncThunk(
     "auth/checkUserAuth",
@@ -59,7 +59,7 @@ export const checkUserAuth = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
 	"auth/updateUser",
-	async (form: registerFormType) => {
+	async (form: TForm) => {
 		return api.updateUser(form);
 	}
 )

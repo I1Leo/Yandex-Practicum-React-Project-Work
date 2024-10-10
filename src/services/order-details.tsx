@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { getOrder } from './api';
 
-type InitialStateType = {
+type TInitialState= {
 	orderRequest: boolean;
 	orderFailed: boolean;
 	order: string | null;
 	isOrderDetailsModalActive: boolean;
 };
 
-const initialState: InitialStateType = {
+const initialState: TInitialState = {
 	orderRequest: false,
 	orderFailed: false,
 	order: null,

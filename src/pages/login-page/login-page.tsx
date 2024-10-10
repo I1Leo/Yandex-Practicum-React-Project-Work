@@ -2,7 +2,7 @@ import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burg
 import s from "./login-page.module.scss"
 import {  useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { login } from "../../services/api";
 import { useAppDispatch } from "../../hooks";
 
@@ -15,12 +15,7 @@ export default function LoginPage() {
    const dispatch = useAppDispatch()
    const navigate = useNavigate();
 
-   const form = {
-      "email": email, 
-      "password": password, 
-    }
-
-   const handleSubmit = async (e) => {
+   const handleSubmit = async (e : FormEvent<HTMLFormElement>) : Promise<void> => {
       e.preventDefault();
 
       const form = {

@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
-type ModalType = {
+type TModal = {
 	children: ReactNode;
 	title: string;
 	onClose: () => void;
@@ -12,12 +12,10 @@ type ModalType = {
 
 const modalRoot = document.getElementById('modals');
 
-export default function Modal({ children, title, onClose }: ModalType) {
+export default function Modal({ children, title, onClose }: TModal)  : JSX.Element | null { 
 	
-	
-
 	useEffect(() => {
-		const handleEsc = (event: KeyboardEvent) => {
+		const handleEsc = (event: KeyboardEvent) : void => {
 			if (event.key === 'Escape') {
 				onClose();
 			}
@@ -25,7 +23,7 @@ export default function Modal({ children, title, onClose }: ModalType) {
 
 		window.addEventListener('keydown', handleEsc);
 
-		return () => {
+		return () : void => {
 			window.removeEventListener('keydown', handleEsc);
 		};
 	}, [onClose]);

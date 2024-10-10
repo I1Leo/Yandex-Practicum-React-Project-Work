@@ -1,14 +1,14 @@
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import s from "./register-page.module.scss"
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { FormEvent } from "react";
 import { register } from "../../utils/api";
 import { useForm } from "../../hooks";
 
 
-export default function RegisterPage() {
+export default function RegisterPage() : JSX.Element {
    
-   const { values, handleChange, setValues } = useForm({
+   const { values, handleChange } = useForm({
       name: "",
       email: "",
       password: "",
@@ -16,7 +16,7 @@ export default function RegisterPage() {
 
    const navigate = useNavigate();
  
-   const handleSubmit = async (e) => {
+   const handleSubmit = async (e : FormEvent<HTMLFormElement>) : Promise<void> => {
       e.preventDefault();
 
       const form = {
