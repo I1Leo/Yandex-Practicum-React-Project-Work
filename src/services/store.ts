@@ -5,11 +5,10 @@ import { ingredientDetailsSlice } from "./ingredient-details";
 import { orderDetailsSlice } from "./order-details";
 import { authSlice } from "./auth";
 import { feedSlice, wsFeedError, wsFeedMessage, } from "./feed/feed-slice";
-import { socketFeedMiddleware } from "./feed/socket-feed-middleware";
 import { wsFeedConnect, wsFeedDisconnect } from "./feed/actions";
-import {  profileFeedSlice, wsProfileFeedError, wsProfileFeedMessage } from "./profile-feed/profile-feed-slice";
-import {wsProfileFeedConnect, wsProfileFeedDisconnect } from "./profile-feed/actions";
-import { socketProfileFeedMiddleware } from "./profile-feed/socket-profile-feed-middleware";
+import { profileFeedSlice, wsProfileFeedError, wsProfileFeedMessage } from "./profile-feed/profile-feed-slice";
+import { wsProfileFeedConnect, wsProfileFeedDisconnect } from "./profile-feed/actions";
+import { socketMiddleware } from "./socket-middleware";
 
 const rootReducer = combineSlices(
    ingredientsSlice,
@@ -21,14 +20,14 @@ const rootReducer = combineSlices(
    profileFeedSlice,
 );
 
-const feedMiddleware: Middleware = socketFeedMiddleware({
+const feedMiddleware: Middleware = socketMiddleware({
    connect: wsFeedConnect,
    disconnect: wsFeedDisconnect,
    onError: wsFeedError,
    onMessage: wsFeedMessage
 })
 
-const ordersMiddleware: Middleware = socketProfileFeedMiddleware({
+const ordersMiddleware: Middleware = socketMiddleware({
    connect: wsProfileFeedConnect,
    disconnect: wsProfileFeedDisconnect,
    onError: wsProfileFeedError,

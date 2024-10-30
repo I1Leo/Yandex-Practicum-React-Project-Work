@@ -30,7 +30,6 @@ export const App = (): JSX.Element => {
 
 	useEffect(() => {
 		dispatch(getIngredients(`${BASE_URL}/ingredients`));
-		dispatch(wsFeedConnect(FEED_SERVER_URL));
 	}, [dispatch]);
 
 	const location = useLocation();

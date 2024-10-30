@@ -4,7 +4,7 @@ import Preload from "../../components/preload/preload";
 import { TFeedOrder } from "../../components/types/feed";
 import { useAppDispatch, useAppSelector } from "../../hooks"
 import s from "./order-page.module.scss"
-import { wsProfileFeedConnect } from "../../services/profile-feed/actions";
+import { wsProfileFeedConnect, wsProfileFeedDisconnect } from "../../services/profile-feed/actions";
 import { ORDERS_SERVER_URL } from "../../constants";
 
 export default function OrderPage(): JSX.Element | null {
@@ -15,6 +15,10 @@ export default function OrderPage(): JSX.Element | null {
 
    useEffect(() => {
       dispatch(wsProfileFeedConnect(`${ORDERS_SERVER_URL}?token=${localStorage.getItem("accessToken")?.slice(7)}`))
+
+      return () => {
+         dispatch(wsProfileFeedDisconnect());
+      };
    }, [dispatch]);
 
    if (!orders) {

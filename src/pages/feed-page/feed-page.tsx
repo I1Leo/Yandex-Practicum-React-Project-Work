@@ -1,12 +1,23 @@
-import s from "./feed-page.module.scss"
 import { useAppDispatch, useAppSelector } from "../../hooks"
 import Feed from "../../components/feed/feed";
-import { TFeed, TFeedResponse } from "../../components/types/feed";
-import Preload from "../../components/preload/preload";
+import { TFeedResponse } from "../../components/types/feed";
+import { wsFeedConnect, wsFeedDisconnect } from "../../services/feed/actions";
+import { useEffect } from "react";
+import { FEED_SERVER_URL } from "../../constants";
 
 export default function FeedPage () {
    
    const feed = useAppSelector<TFeedResponse | null>(state => state.root.feed.feed);
+
+   const dispatch = useAppDispatch();
+
+   useEffect(() => {
+		dispatch(wsFeedConnect(FEED_SERVER_URL));
+
+      return () => {
+         dispatch(wsFeedDisconnect());
+      };
+	}, [dispatch]);
 
    if (!feed) {
       return null

@@ -1,7 +1,6 @@
 import { ActionCreatorWithPayload, ActionCreatorWithoutPayload, Middleware } from "@reduxjs/toolkit";
-import { store } from "../store";
-import { RootState } from "../../hooks";
-import { refreshToken } from "../../utils/request";
+import { RootState } from "../hooks";
+import { refreshToken } from "../utils/request";
 
 
 export type TWsActionTypes<R> = {
@@ -11,7 +10,7 @@ export type TWsActionTypes<R> = {
     onMessage: ActionCreatorWithPayload<R>;
 }
 
-export const socketProfileFeedMiddleware = <R>(wsActions: TWsActionTypes<R>, withTokenRefresh: boolean = false): Middleware<NonNullable<unknown>, RootState> => {
+export const socketMiddleware = <R>(wsActions: TWsActionTypes<R>, withTokenRefresh: boolean = false): Middleware<NonNullable<unknown>, RootState> => {
     return store => {
         let socket: WebSocket | null = null;
         const {
