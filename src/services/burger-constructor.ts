@@ -1,5 +1,5 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredients } from './burger-ingredients';
+import { TConstructorIngredient, TIngredients } from '../components/types/ingredients';
 
 type TInitialState = {
 	bun: TIngredients | null;
@@ -11,9 +11,6 @@ const initialState: TInitialState = {
 	constructorIngredients: [],
 };
 
-export type TConstructorIngredient = TIngredients & {
-	key?: string
-};
 
 export const constructorIngredientsSlice = createSlice({
 	name: 'constructorIngredients',
@@ -53,5 +50,5 @@ export const constructorIngredientsSlice = createSlice({
 			state.bun = null;
 			state.constructorIngredients = [];
 		},
-	},
+	}
 });

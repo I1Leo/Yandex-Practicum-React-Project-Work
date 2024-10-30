@@ -1,20 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getIngredients } from './api';
+import { TIngredients } from '../components/types/ingredients';
 
-export type TIngredients = {
-	_id: string;
-	name: string;
-	type: string;
-	proteins: number;
-	fat: number;
-	carbohydrates: number;
-	calories: number;
-	price: number;
-	image: string;
-	image_mobile: string;
-	image_large: string;
-	__v: number;
-};
 
 type TInitialState = {
 	ingredientsRequest: boolean;
@@ -50,5 +37,6 @@ export const ingredientsSlice = createSlice({
 				state.ingredientsRequest = false;
 				state.ingredientsFailed = true;
 			});
-	},
+	}
 });
+

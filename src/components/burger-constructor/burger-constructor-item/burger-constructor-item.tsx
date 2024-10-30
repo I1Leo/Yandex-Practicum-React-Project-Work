@@ -4,19 +4,14 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './burger-consructor-item.module.scss';
 import {
-	TConstructorIngredient,
 	constructorIngredientsSlice,
 } from '../../../services/burger-constructor';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../../hooks';
+import { TBurgerConstructorItem } from '../../types/ingredients';
 
-type TBurgerConstructorItem = {
-	type?: 'top' | 'bottom' | undefined;
-	ingredient: TConstructorIngredient;
-	index?: number;
-	moveIngredient?: (dragIndex: number, hoverIndex: number) => void;
-};
+
 
 export default function BurgerConstructorItem({
 	type,

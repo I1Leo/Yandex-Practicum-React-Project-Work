@@ -5,7 +5,7 @@ import BurgerIngredientsSection from './burger-ingredients-section/burger-ingred
 import { getIngredients } from '../../services/api';
 import { BASE_URL } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { TIngredients } from '../../services/burger-ingredients';
+import { TIngredients } from '../types/ingredients';
 
 export default function BurgerIngredients() : JSX.Element{
 	const [current, setCurrent] = useState<string>('Булки');

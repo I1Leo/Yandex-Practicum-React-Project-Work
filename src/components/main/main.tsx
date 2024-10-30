@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { orderDetailsSlice } from '../../services/order-details';
 import s from "./main.module.scss"
 
-export default function Main() : JSX.Element {
+export default function Main(): JSX.Element {
 
    const { orderRequest, orderFailed, isOrderDetailsModalActive } =
       useAppSelector((state) => state.root.orderDetails);
@@ -17,12 +17,17 @@ export default function Main() : JSX.Element {
    const { deactivateOrderDetailsModal } = orderDetailsSlice.actions;
    const dispatch = useAppDispatch();
 
-   const handleClose = () : void => {
+   const handleClose = (): void => {
       dispatch(deactivateOrderDetailsModal());
    };
 
    return (
       <main className={s.main}>
+         {orderRequest && isOrderDetailsModalActive && (
+            <Modal title='' onClose={handleClose}>
+               <p className='text text_type_main-medium'>Оформление заказа...</p>
+            </Modal>
+         )}
          {!orderRequest && !orderFailed && isOrderDetailsModalActive && (
             <Modal title='' onClose={handleClose}>
                <OrderDetails />

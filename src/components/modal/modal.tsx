@@ -1,21 +1,19 @@
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './modal.module.scss';
-import { ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import { useParams } from 'react-router-dom';
+import { TModal } from '../types/modal';
 
-type TModal = {
-	children: ReactNode;
-	title: string;
-	onClose: () => void;
-};
+
 
 const modalRoot = document.getElementById('modals');
 
-export default function Modal({ children, title, onClose }: TModal)  : JSX.Element | null { 
-	
+export default function Modal({ children, title, isOrder, onClose }: TModal): JSX.Element | null {
+
 	useEffect(() => {
-		const handleEsc = (event: KeyboardEvent) : void => {
+		const handleEsc = (event: KeyboardEvent): void => {
 			if (event.key === 'Escape') {
 				onClose();
 			}
@@ -23,25 +21,32 @@ export default function Modal({ children, title, onClose }: TModal)  : JSX.Eleme
 
 		window.addEventListener('keydown', handleEsc);
 
-		return () : void => {
+		return (): void => {
 			window.removeEventListener('keydown', handleEsc);
 		};
 	}, [onClose]);
 
 	if (!modalRoot) return null;
 
+	const orderNumber = useParams().orderNumber;
+
 	return createPortal(
 		<>
 			<ModalOverlay onClose={onClose} />
 			<div className={`${s.modal} pt-10 pr-10 pb-15 pl-10`}>
 				<div className={s.modal_header}>
-					<h2 className={`${s.title} text text_type_main-large`}>{title}</h2>
+					{
+						title && <h2 className={`${s.title} text text_type_main-large`}>{title}</h2> 
+					}
+					{
+						isOrder && <h2 className={`${s.title} text text_type_digits-default`}># {orderNumber}</h2> 
+					}
 					<button className={`${s.close_btn}`} onClick={() => onClose()}>
 						<CloseIcon type='primary' />
 					</button>
 				</div>
 				{children}
-			</div>
+			</div >
 		</>,
 		modalRoot
 	);

@@ -1,18 +1,11 @@
+import { TApiResponse } from '../components/types/api';
 import { BASE_URL } from '../constants';
-import { TIngredients } from '../services/burger-ingredients';
-import { TRegisterResponse} from './api';
 
 export const checkResponse = (res: Response) => {
 	if (res.ok) {
 		return res.json();
 	}
 	return Promise.reject(`${res.status}`);
-};
-
-export type TApiResponse = {
-	success: boolean;
-	data: TIngredients[] | TRegisterResponse;
-	[key: string]: any;
 };
 
 export const checkSuccess = (res: TApiResponse) => {

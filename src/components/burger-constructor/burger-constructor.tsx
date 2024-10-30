@@ -6,16 +6,15 @@ import s from './burger-constructor.module.scss';
 import BurgerConstructorItem from './burger-constructor-item/burger-constructor-item';
 import { useDrop } from 'react-dnd';
 import {
-	TConstructorIngredient,
 	constructorIngredientsSlice,
 } from '../../services/burger-constructor';
 import { useCallback, useMemo } from 'react';
 import { getOrder } from '../../services/api';
 import { orderDetailsSlice } from '../../services/order-details';
-import { TIngredients } from '../../services/burger-ingredients';
 import { BASE_URL } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
+import { TConstructorIngredient, TIngredients } from '../types/ingredients';
 
 export default function BurgerConstructor() : JSX.Element {
 	const { bun, constructorIngredients } = useAppSelector(

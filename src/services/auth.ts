@@ -1,19 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { login, logout, setUser, updateUser } from "./api"
-import { TForm } from "../utils/api"
+import { TUser } from "../components/types/auth"
 
 type TInitialState = {
    user: TUser | null
    isAuthChecked: boolean
 }
 
-export type TUser = Pick<TForm, "name" | "email">
-
 const initialState: TInitialState= {
    user: null,
    isAuthChecked: false
 }
-
 
 export const authSlice = createSlice({
    name: "auth",

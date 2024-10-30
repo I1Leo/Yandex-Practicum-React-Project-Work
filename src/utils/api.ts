@@ -1,10 +1,9 @@
+
+import { TForm, TLoginForm, TResetPasswordForm } from "../components/types/auth";
 import { BASE_URL } from "../constants"
 import { checkResponse, checkSuccess, fetchWithRefresh } from "./request"
 
-export type TUserResponse = {
-   email: string
-   password: string
-}
+
 
 export const getUser = async () => {
    return await fetchWithRefresh(`${BASE_URL}/auth/user`, {
@@ -25,11 +24,7 @@ export const getUser = async () => {
    })
 }
 
-export type TForm = {
-   email: string
-   password: string
-   name: string
-}
+
 
 export const updateUser = async (form: TForm) => {
    return await fetchWithRefresh(`${BASE_URL}/auth/user`, {
@@ -69,9 +64,7 @@ export const forgotPassword = async (email: string) => {
       })
 }
 
-export type TResetPasswordForm = Pick<TForm, "password"> & {
-   token: string
-}
+
 
 export const resetPassword = async (form: TResetPasswordForm) => {
    return await fetch(`${BASE_URL}/password-reset/reset`, {
@@ -93,16 +86,6 @@ export const resetPassword = async (form: TResetPasswordForm) => {
       })
 }
 
-export type TRegisterResponse = {
-   success: boolean,
-   user: {
-      email: string
-      name: string
-   },
-   accessToken: string
-   refreshToken: string
-}
-
 export const register = async (form: TForm) => {
    return await fetch(`${BASE_URL}/auth/register`, {
       method: 'POST',
@@ -120,7 +103,7 @@ export const register = async (form: TForm) => {
       .then(checkSuccess)
 }
 
-export type TLoginForm = Pick<TForm, "email" | "password">
+
 
 export const login = async (form: TLoginForm) => {
    return await fetch(`${BASE_URL}/auth/login`, {
