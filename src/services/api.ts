@@ -1,7 +1,8 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { checkResponse, checkSuccess } from '../utils/request';
-import { api, TForm } from '../utils/api';
-import { setIsAuthChecked, TUser} from './auth';
+import { api } from '../utils/api';
+import { setIsAuthChecked } from './auth';
+import { TForm, TUser } from '../components/types/auth';
 
 export const getIngredients = createAsyncThunk(
 	'getIngredients',
@@ -36,11 +37,27 @@ export const getOrder = createAsyncThunk(
 	}
 );
 
+export const getOrderByNumber = createAsyncThunk(
+	'getOrderByNumber',
+	async (url : string) => {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then(checkResponse)
+			.then(checkSuccess);
+
+		return response;
+	}
+);
+
 export const login = createAsyncThunk('auth/login', api.login);
 
 export const logout = createAsyncThunk('auth/logout', api.logout);
 
-export const setUser = createAction <TUser>("auth/setUser");
+export const setUser = createAction <TUser, "auth/setUser">("auth/setUser");
 
 export const checkUserAuth = createAsyncThunk(
     "auth/checkUserAuth",

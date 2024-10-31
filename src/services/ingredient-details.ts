@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TIngredients } from './burger-ingredients';
+import { TIngredients } from '../components/types/ingredients';
 
 type TInitialState = {
 	ingredientDetails: TIngredients | null;

@@ -1,11 +1,11 @@
 .main {
-   padding-top: 120px;
    max-width: 1240px;
    margin: 0 auto;
+   padding-top: 40px;
 }
 
 .navigation {
-   width: 320px;
+   padding-top: 80px;
 }
 
 .nav_text {
@@ -18,7 +18,8 @@
 }
 
 .container {
-   display: flex;
+   display: grid;
+   grid-template-columns: 320px 844px;
    gap: 60px;
 }
 
@@ -26,6 +27,7 @@
    display: flex;
    flex-direction: column;
    gap: 24px;
+   padding-top: 80px;
 }
 
 .form_controls {

@@ -25,7 +25,7 @@ export default function AppHeaderNav() : JSX.Element {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/orders">
+					<NavLink to="/feed">
 						{({ isActive }) => (
 							<AppHeaderItem
 								isActive={isActive}

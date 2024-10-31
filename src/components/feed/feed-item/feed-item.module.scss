@@ -1,0 +1,39 @@
+
+.item {
+   background-color: #1c1c21;
+   border-radius: 40px;
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
+   width: 100%;
+}
+
+.header {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+}
+
+.body {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   width: 100%;
+}
+
+.ingredients {
+   display: flex;
+
+   li:not(:first-child) {
+      margin-left: -15px;
+   }
+}
+
+.price {
+   display: flex;
+   gap: 9px;
+}
+
+.done_order {
+   color: #00CCCC;
+}

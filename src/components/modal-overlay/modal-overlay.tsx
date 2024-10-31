@@ -1,9 +1,6 @@
+import { TModalOverlay } from '../types/modal';
 import s from './modal-overlay.module.scss';
 import { KeyboardEvent } from 'react';
-
-type TModalOverlay = {
-	onClose: () => void;
-};
 
 export default function ModalOverlay({ onClose }: TModalOverlay) : JSX.Element {
 	const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) : void => {

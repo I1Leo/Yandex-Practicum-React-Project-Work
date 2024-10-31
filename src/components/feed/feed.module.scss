@@ -1,0 +1,22 @@
+.section {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 0 15px 50px;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: minmax(auto, 608px) 1fr;
+	gap: 60px;
+
+}
+
+.feed_container {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	max-height: 852px;
+	overflow-y: auto;
+	padding-right: 18px;
+	width: 608px;
+}

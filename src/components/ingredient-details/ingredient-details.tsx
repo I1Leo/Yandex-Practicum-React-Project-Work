@@ -1,20 +1,20 @@
 import s from './ingredient-detail.module.scss';
 import { useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { TIngredients } from '../../services/burger-ingredients';
+import Preload from '../preload/preload';
+import { TIngredientDetails, TIngredients } from '../types/ingredients';
 
-type TIngredientDetails = {
-	isTitle?: boolean
-}
 
-export default function IngredientDetails({isTitle = false} : TIngredientDetails) : JSX.Element {
-	const { ingredientDetails } = useAppSelector(
-		(state) => state.root.ingredientDetails
-	);
+
+export default function IngredientDetails({isTitle = false} : TIngredientDetails) : JSX.Element | null {
 
 	const { ingredientId } = useParams();
 
-	const ingredients = useAppSelector(state => state.root.ingredients.ingredients)
+	const ingredients = useAppSelector(state => state.root.ingredients.ingredients);
+
+	if (!ingredients) {
+		return null;
+	}
 	const currentIngredient = ingredients.filter((ingredient : TIngredients) : boolean => ingredient._id === ingredientId)[0];
 
 	return (
@@ -22,11 +22,11 @@ export default function IngredientDetails({isTitle = false} : TIngredientDetails
 			{
 				!isTitle ?
 					<>
-						<div className={`${s.img_container} mb-4`}>
-							<img src={ingredientDetails?.image} alt={ingredientDetails?.name} />
+						<div className={`${s.img_container} ${s.img_container_page}`}>
+							<img src={currentIngredient?.image} alt={currentIngredient?.name} />
 						</div>
 						<p className='text text_type_main-medium pb-8'>
-							{ingredientDetails?.name}
+							{currentIngredient?.name}
 						</p>
 						<table>
 							<thead>
@@ -39,10 +39,10 @@ export default function IngredientDetails({isTitle = false} : TIngredientDetails
 							</thead>
 							<tbody>
 								<tr className='text text_type_digits-default text_color_inactive'>
-									<th className='pr-5'>{ingredientDetails?.calories}</th>
-									<th className='pr-5'>{ingredientDetails?.proteins}</th>
-									<th className='pr-5'>{ingredientDetails?.fat}</th>
-									<th>{ingredientDetails?.carbohydrates}</th>
+									<th className='pr-5'>{currentIngredient?.calories}</th>
+									<th className='pr-5'>{currentIngredient?.proteins}</th>
+									<th className='pr-5'>{currentIngredient?.fat}</th>
+									<th>{currentIngredient?.carbohydrates}</th>
 								</tr>
 							</tbody>
 						</table>

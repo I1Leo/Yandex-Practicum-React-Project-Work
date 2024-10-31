@@ -1,12 +1,8 @@
-import { RefObject } from 'react';
-import { TIngredients } from '../../../services/burger-ingredients';
 import BurgerIngredientsItem from '../burger-ingredients-item/burger-ingredients-item';
 import s from './burger-ingredients-section.module.scss';
+import { TBurgerIngredientsSection, TIngredients } from '../../types/ingredients';
 
-type TBurgerIngredientsSection= {
-	ingredient: Array<TIngredients>;
-	sectionRef: RefObject<HTMLDivElement>;
-};
+
 
 export default function BurgerIngredientsSection({
 	ingredient,

@@ -3,27 +3,19 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './burger-ingredient-item.module.scss';
-import { ingredientDetailsSlice } from '../../../services/ingredient-details';
 import { useDrag } from 'react-dnd';
 import { useMemo } from 'react';
-import { TIngredients } from '../../../services/burger-ingredients';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { useAppSelector } from '../../../hooks';
 import { Link, useLocation } from 'react-router-dom';
+import { TBurgerIngredientsItem, TIngredients } from '../../types/ingredients';
 
-type TBurgerIngredientsItem = {
-	ingredient: TIngredients;
-};
+
 export default function BurgeringredientsItem({
 	ingredient,
 }: TBurgerIngredientsItem) : JSX.Element {
-	const { ingredients } = useAppSelector((state) => state.root.ingredients);
 	const { bun, constructorIngredients } = useAppSelector(
 		(state) => state.root.constructorIngredients
-	);
-
-	const { getIngredientDetails, activateIngredientsDetailsModal } =
-		ingredientDetailsSlice.actions;
-	const dispatch = useAppDispatch();
+	);;
 
 	const location = useLocation();
 
@@ -35,15 +27,6 @@ export default function BurgeringredientsItem({
 		}),
 	});
 
-	function handleClick() : void {
-		const currentIngredient = ingredients.find(
-			(currentIngredient : TIngredients) : boolean => currentIngredient.name === ingredient.name
-		);
-		if (currentIngredient) {
-			dispatch(getIngredientDetails(currentIngredient));
-			dispatch(activateIngredientsDetailsModal());
-		}
-	}
 
 	const amount = useMemo(() => {
 		if (bun) {
@@ -61,7 +44,7 @@ export default function BurgeringredientsItem({
 		<li className={s.item} ref={dragRef}>
 			<Link key={ingredient._id}
 			to={`/ingredients/${ingredient._id}`} state={{background: location}}>
-				<button onClick={handleClick}>
+				<button>
 					{amount > 0 && (
 						<Counter count={amount} size='default' extraClass='m-1' />
 					)}

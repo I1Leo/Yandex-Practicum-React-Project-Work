@@ -77,7 +77,7 @@ export default function ProfilePage() : JSX.Element {
    return (
          <main className={s.main}>
             <div className={s.container}>
-               <nav>
+               <nav className={s.navigation}>
                   <ul className="pb-20">
                      <li className={`text text_type_main-large ${s.nav_text}`}><NavLink to="/profile" className={({ isActive }) => isActive ? 'text_color_default' : "text_color_inactive"} end>Профиль</NavLink></li>
                      <li className={`text text_type_main-large ${s.nav_text}`}><NavLink to="/profile/order" className={({ isActive }) => isActive ? 'text_color_default' : "text_color_inactive"}>История заказов</NavLink></li>
