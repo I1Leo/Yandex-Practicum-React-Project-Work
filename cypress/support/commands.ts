@@ -1,37 +1,31 @@
-/// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+declare namespace Cypress {
+  interface Chainable {
+    createOrder(): Chainable;
+    addTokens(): Chainable;
+  }
+}
+
+const data_product: string = "[data-testid = 643d69a5c3f7b9001cfa0943]"
+
+Cypress.Commands.add("createOrder", () => {
+  cy.get("[data-testid = 643d69a5c3f7b9001cfa093d]").trigger("dragstart");
+  cy.get('[data-testid = constructor-section]').as("constructor-section");
+  cy.get('@constructor-section').trigger("drop");
+  cy.get(data_product).trigger("dragstart");
+  cy.get('@constructor-section').trigger("drop");
+  cy.get(data_product).trigger("dragstart");
+  cy.get('@constructor-section').trigger("drop");
+
+  cy.get("[data-testid = order-btn]").click();
+})
+
+Cypress.Commands.add("addTokens", () => {
+  window.localStorage.setItem(
+    "refreshToken",
+    JSON.stringify("test-refreshToken")
+  );
+  window.localStorage.setItem(
+    "accessToken",
+    JSON.stringify("test-accessToken")
+  );
+})

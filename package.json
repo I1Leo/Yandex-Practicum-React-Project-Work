@@ -8,6 +8,7 @@
 		"@babel/preset-env": "^7.26.0",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
 		"@svgr/webpack": "^8.0.1",
+		"@types/cypress": "^1.1.6",
 		"@types/node": "^22.5.0",
 		"@types/react": "^18.2.0",
 		"@types/react-dom": "^18.2.1",
@@ -64,7 +65,7 @@
 		"stylelint:fix": "stylelint \"src/**/*.css\" --fix",
 		"lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
 		"format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\" --ignore-path ./.prettierignore",
-		"test": "jest",
+		"test": "jest && yarn stylelint:fix && yarn lint && yarn format",
 		"prepare": "husky install",
 		"commit": "yarn test && cz",
 		"cypress": "cypress open cache clear",
@@ -96,7 +97,7 @@
 			"path": "./node_modules/cz-conventional-changelog"
 		}
 	},
-	"homepage": "https://i1leo.github.io/Yandex-Practicum-React-Project-Work/",
+	"homepage": "/",
 	"babel": {
 		"presets": [
 			"@babel/preset-env",

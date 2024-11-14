@@ -55,4 +55,10 @@ export const constructorIngredientsSlice = createSlice({
 	},
 });
 
-export const { addBun, addIngredient, deleteIngredient, setIngredients, resetIngredients } = constructorIngredientsSlice.actions
+export const {
+	addBun,
+	addIngredient,
+	deleteIngredient,
+	setIngredients,
+	resetIngredients,
+} = constructorIngredientsSlice.actions;

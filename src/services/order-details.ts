@@ -43,7 +43,7 @@ export const orderDetailsSlice = createSlice({
 	},
 });
 
+export const { activateOrderDetailsModal, deactivateOrderDetailsModal } =
+	orderDetailsSlice.actions;
 
-export const { activateOrderDetailsModal, deactivateOrderDetailsModal } = orderDetailsSlice.actions
-
-export { getOrder }
+export { getOrder };

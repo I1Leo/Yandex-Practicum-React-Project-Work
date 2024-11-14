@@ -58,4 +58,4 @@ export const { wsProfileFeedError, wsProfileFeedMessage, setCurrentOrder } =
 
 export const { getOrders } = profileFeedSlice.selectors;
 
-export { getOrderByNumber } 
+export { getOrderByNumber };

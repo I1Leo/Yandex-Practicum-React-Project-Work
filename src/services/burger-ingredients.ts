@@ -36,4 +36,4 @@ export const ingredientsSlice = createSlice({
 	},
 });
 
-export  { getIngredients } 
+export { getIngredients };

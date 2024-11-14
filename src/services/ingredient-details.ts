@@ -27,5 +27,8 @@ export const ingredientDetailsSlice = createSlice({
 	},
 });
 
-
-export const { getIngredientDetails, activateIngredientsDetailsModal, deactivateIngredientsDetailsModal } = ingredientDetailsSlice.actions
+export const {
+	getIngredientDetails,
+	activateIngredientsDetailsModal,
+	deactivateIngredientsDetailsModal,
+} = ingredientDetailsSlice.actions;
