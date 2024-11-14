@@ -3,22 +3,18 @@ import {
 	DragIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import s from './burger-consructor-item.module.scss';
-import {
-	constructorIngredientsSlice,
-} from '../../../services/burger-constructor';
+import { constructorIngredientsSlice } from '../../../services/burger-constructor';
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../../hooks';
 import { TBurgerConstructorItem } from '../../types/ingredients';
-
-
 
 export default function BurgerConstructorItem({
 	type,
 	ingredient,
 	index,
 	moveIngredient,
-}: TBurgerConstructorItem) : JSX.Element {
+}: TBurgerConstructorItem): JSX.Element {
 	const dispatch = useAppDispatch();
 	const { deleteIngredient } = constructorIngredientsSlice.actions;
 
@@ -66,14 +62,18 @@ export default function BurgerConstructorItem({
 		<li ref={ref} className={`${s.item}`}>
 			{ingredient.type !== 'bun' && <DragIcon type='primary' />}
 			{ingredient.type !== 'bun' ? (
-				<ConstructorElement
-					text={ingredient.name}
-					price={ingredient.price}
-					thumbnail={ingredient.image}
-					handleClose={() => handleDelete()}
-				/>
+				<div data-testid={`Ingredient-${index}`}>
+					<ConstructorElement
+						text={ingredient.name}
+						price={ingredient.price}
+						thumbnail={ingredient.image}
+						handleClose={() => handleDelete()}
+					/>
+				</div>
 			) : (
-				<div className='pl-8'>
+				<div
+					data-testid={type === 'top' ? 'top-bun' : 'bottom-bun'}
+					className='pl-8'>
 					<ConstructorElement
 						type={type}
 						isLocked={true}

@@ -6,7 +6,7 @@ import {
 import s from './app-header-item.module.scss';
 
 type TAppHeaderItem = {
-	isActive: boolean
+	isActive: boolean;
 	icon: string;
 	text: string;
 };
@@ -15,10 +15,9 @@ export default function AppHeaderItem({
 	isActive,
 	icon,
 	text,
-}: TAppHeaderItem) : JSX.Element {
+}: TAppHeaderItem): JSX.Element {
 	return (
-		<button
-			className={`${s.item} pt-4 pr-5 pb-4 pl-5`}>
+		<button className={`${s.item} pt-4 pr-5 pb-4 pl-5`}>
 			{icon === 'burger' ? (
 				<BurgerIcon type={isActive ? 'primary' : 'secondary'} />
 			) : icon === 'list' ? (
@@ -27,9 +26,7 @@ export default function AppHeaderItem({
 				<ProfileIcon type={isActive ? 'primary' : 'secondary'} />
 			)}
 			<p
-				className={`text text_type_main-default ${
-					isActive ? s.isActive : ''
-				}`}>
+				className={`text text_type_main-default ${isActive ? s.isActive : ''}`}>
 				{text}
 			</p>
 		</button>

@@ -7,7 +7,7 @@ import { BASE_URL } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { TIngredients } from '../types/ingredients';
 
-export default function BurgerIngredients() : JSX.Element{
+export default function BurgerIngredients(): JSX.Element {
 	const [current, setCurrent] = useState<string>('Булки');
 
 	const { ingredients } = useAppSelector((state) => state.root.ingredients);
@@ -19,15 +19,15 @@ export default function BurgerIngredients() : JSX.Element{
 	}, [dispatch]);
 
 	const burgerBuns = [...ingredients].filter(
-		(ingredient : TIngredients) : boolean => ingredient.type === 'bun'
+		(ingredient: TIngredients): boolean => ingredient.type === 'bun'
 	);
 
 	const burgerSauces = [...ingredients].filter(
-		(ingredient : TIngredients) : boolean => ingredient.type === 'sauce'
+		(ingredient: TIngredients): boolean => ingredient.type === 'sauce'
 	);
 
 	const burgerMains = [...ingredients].filter(
-		(ingredient : TIngredients) : boolean => ingredient.type === 'main'
+		(ingredient: TIngredients): boolean => ingredient.type === 'main'
 	);
 
 	const tabsRef = useRef<HTMLUListElement>(null);
@@ -37,7 +37,7 @@ export default function BurgerIngredients() : JSX.Element{
 		Начинки: useRef<HTMLDivElement>(null),
 	};
 
-	const handleScroll = () : void => {
+	const handleScroll = (): void => {
 		if (!tabsRef.current) return;
 
 		const tabsRect = tabsRef.current.getBoundingClientRect();
