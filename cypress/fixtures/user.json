@@ -1,0 +1,9 @@
+{
+   "success": true,
+   "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2ZjA2MDkyMTE5ZDQ1MDAxYjUwODY5OSIsImlhdCI6MTczMTU3OTE3NSwiZXhwIjoxNzMxNTgwMzc1fQ.wUAAvG_-m8ulRVvfhOz1jtoaILYqxSU28j4_Dj_HhWc",
+   "refreshToken": "60ce71b16e16917e0461a6ea2dd12524967abd993337411d0a3e5bb8dcc3b97932be743dee1a651b",
+   "user": {
+       "email": "vanleo528@yandex.ru",
+       "name": "Ivani"
+   }
+}

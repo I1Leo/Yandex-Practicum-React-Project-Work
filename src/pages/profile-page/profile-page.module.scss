@@ -1,45 +1,45 @@
 .main {
-   max-width: 1240px;
-   margin: 0 auto;
-   padding-top: 40px;
+	max-width: 1240px;
+	margin: 0 auto;
+	padding-top: 40px;
 }
 
 .navigation {
-   padding-top: 80px;
+	padding-top: 80px;
 }
 
 .nav_text {
-   font-size: 24px;
-   line-height: 2.6667;
+	font-size: 24px;
+	line-height: 2.6667;
 }
 
 .text_info {
-   margin-top: -16px;
+	margin-top: -16px;
 }
 
 .container {
-   display: grid;
-   grid-template-columns: 320px 844px;
-   gap: 60px;
+	display: grid;
+	grid-template-columns: 320px 844px;
+	gap: 60px;
 }
 
 .form {
-   display: flex;
-   flex-direction: column;
-   gap: 24px;
-   padding-top: 80px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding-top: 80px;
 }
 
 .form_controls {
-   display: none;
-   gap: 20px;
-   justify-content: flex-end;
+	display: none;
+	gap: 20px;
+	justify-content: flex-end;
 }
 
 .isActive {
-   display: flex;
+	display: flex;
 }
 
 .cancel_btn {
-   color: #4C4CFF
+	color: #4c4cff;
 }

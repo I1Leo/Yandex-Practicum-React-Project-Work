@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { getIngredients } from './api';
 import { TIngredients } from '../components/types/ingredients';
-
 
 type TInitialState = {
 	ingredientsRequest: boolean;
@@ -9,7 +8,7 @@ type TInitialState = {
 	ingredients: TIngredients[];
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	ingredientsRequest: false,
 	ingredientsFailed: false,
 	ingredients: [],
@@ -25,18 +24,16 @@ export const ingredientsSlice = createSlice({
 				state.ingredientsRequest = true;
 				state.ingredientsFailed = false;
 			})
-			.addCase(
-				getIngredients.fulfilled,
-				(state, action) => {
-					const ingredientsData = action.payload as TIngredients[];
-					state.ingredientsRequest = false;
-					state.ingredients = ingredientsData;
-				}
-			)
+			.addCase(getIngredients.fulfilled, (state, action) => {
+				const ingredientsData = action.payload as TIngredients[];
+				state.ingredientsRequest = false;
+				state.ingredients = ingredientsData;
+			})
 			.addCase(getIngredients.rejected, (state) => {
 				state.ingredientsRequest = false;
 				state.ingredientsFailed = true;
 			});
-	}
+	},
 });
 
+export { getIngredients };

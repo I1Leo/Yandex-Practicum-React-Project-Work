@@ -5,9 +5,7 @@ import {
 import s from './burger-constructor.module.scss';
 import BurgerConstructorItem from './burger-constructor-item/burger-constructor-item';
 import { useDrop } from 'react-dnd';
-import {
-	constructorIngredientsSlice,
-} from '../../services/burger-constructor';
+import { constructorIngredientsSlice } from '../../services/burger-constructor';
 import { useCallback, useMemo } from 'react';
 import { getOrder } from '../../services/api';
 import { orderDetailsSlice } from '../../services/order-details';
@@ -16,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { TConstructorIngredient, TIngredients } from '../types/ingredients';
 
-export default function BurgerConstructor() : JSX.Element {
+export default function BurgerConstructor(): JSX.Element {
 	const { bun, constructorIngredients } = useAppSelector(
 		(state) => state.root.constructorIngredients
 	);
@@ -26,7 +24,7 @@ export default function BurgerConstructor() : JSX.Element {
 		constructorIngredientsSlice.actions;
 	const { activateOrderDetailsModal } = orderDetailsSlice.actions;
 
-	const user = useAppSelector(state => state.root.auth.user)
+	const user = useAppSelector((state) => state.root.auth.user);
 
 	const [{ isOver, draggingItem }, dropRef] = useDrop({
 		accept: 'ingredient',
@@ -57,7 +55,7 @@ export default function BurgerConstructor() : JSX.Element {
 	);
 
 	const renderItem = useCallback(
-		(ingredient: TConstructorIngredient, index: number) : JSX.Element => {
+		(ingredient: TConstructorIngredient, index: number): JSX.Element => {
 			return (
 				<BurgerConstructorItem
 					key={ingredient.key}
@@ -73,25 +71,25 @@ export default function BurgerConstructor() : JSX.Element {
 	const totalPrice = useMemo(() => {
 		if (bun) {
 			return [bun, ...constructorIngredients, bun].reduce(
-				(sum : number, curr : TIngredients) : number => sum + curr.price,
+				(sum: number, curr: TIngredients): number => sum + curr.price,
 				0
 			);
 		} else {
 			return [...constructorIngredients].reduce(
-				(sum : number, curr : TIngredients) : number => sum + curr.price,
+				(sum: number, curr: TIngredients): number => sum + curr.price,
 				0
 			);
 		}
 	}, [bun, constructorIngredients]);
 
-	const bunPlaceholderBorder : { border : string } = {
+	const bunPlaceholderBorder: { border: string } = {
 		border:
 			isOver && draggingItem.ingredient.type === 'bun'
 				? '2px solid #524EFF'
 				: 'none',
 	};
 
-	const ingredientPlaceholderBorder : {border : string } = {
+	const ingredientPlaceholderBorder: { border: string } = {
 		border:
 			isOver && draggingItem.ingredient.type !== 'bun'
 				? '2px solid #524EFF'
@@ -100,19 +98,22 @@ export default function BurgerConstructor() : JSX.Element {
 
 	const ingredientsIds = useMemo(() => {
 		if (bun) {
-			return [bun, ...constructorIngredients, bun].map((item : TIngredients) : string => item._id);
+			return [bun, ...constructorIngredients, bun].map(
+				(item: TIngredients): string => item._id
+			);
 		} else {
-			return [...constructorIngredients].map((item : TIngredients) : string => item._id);
+			return [...constructorIngredients].map(
+				(item: TIngredients): string => item._id
+			);
 		}
 	}, [bun, constructorIngredients]);
 
 	const navigate = useNavigate();
 
-	const handleClick = () : void => {
-		
+	const handleClick = (): void => {
 		if (!user) {
 			navigate('/login');
-			return
+			return;
 		}
 
 		dispatch(getOrder({ url: `${BASE_URL}/orders`, ingredientsIds }));
@@ -123,7 +124,10 @@ export default function BurgerConstructor() : JSX.Element {
 	return (
 		<div className={`pt-25 pr-4 pl-4 ${s.container}`}>
 			{
-				<ul className={`${s.constructor_list}`} ref={dropRef}>
+				<ul
+					data-testid='constructor-section'
+					className={`${s.constructor_list}`}
+					ref={dropRef}>
 					{bun ? (
 						<BurgerConstructorItem type='top' ingredient={bun} />
 					) : (
@@ -139,8 +143,9 @@ export default function BurgerConstructor() : JSX.Element {
 						className={`${constructorIngredients.length === 0 ? 'pl-8' : ''}`}>
 						{constructorIngredients.length > 0 ? (
 							<ul className={s.sublist}>
-								{constructorIngredients.map((ingredient : TIngredients, index : number) : JSX.Element =>
-									renderItem(ingredient, index)
+								{constructorIngredients.map(
+									(ingredient: TIngredients, index: number): JSX.Element =>
+										renderItem(ingredient, index)
 								)}
 							</ul>
 						) : (
@@ -169,14 +174,16 @@ export default function BurgerConstructor() : JSX.Element {
 					<p className='text text_type_digits-medium'>{totalPrice}</p>
 					<CurrencyIcon type='primary' />
 				</div>
-				<Button
-					htmlType='button'
-					type='primary'
-					size='large'
-					onClick={() => handleClick()}
-					disabled={bun ? false : true}>
-					Оформить заказ
-				</Button>
+				<div data-testid='order-btn'>
+					<Button
+						htmlType='button'
+						type='primary'
+						size='large'
+						onClick={() => handleClick()}
+						disabled={bun ? false : true}>
+						Оформить заказ
+					</Button>
+				</div>
 			</div>
 		</div>
 	);

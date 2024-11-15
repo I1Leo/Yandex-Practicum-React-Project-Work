@@ -1,70 +1,74 @@
-import { ActionCreatorWithPayload, ActionCreatorWithoutPayload, Middleware } from "@reduxjs/toolkit";
-import { RootState } from "../hooks";
-import { refreshToken } from "../utils/request";
-
+import {
+	ActionCreatorWithPayload,
+	ActionCreatorWithoutPayload,
+	Middleware,
+} from '@reduxjs/toolkit';
+import { RootState } from '../hooks';
+import { refreshToken } from '../utils/request';
 
 export type TWsActionTypes<R> = {
-    connect: ActionCreatorWithPayload<string>;
-    disconnect: ActionCreatorWithoutPayload;
-    onError: ActionCreatorWithPayload<string>;
-    onMessage: ActionCreatorWithPayload<R>;
-}
+	connect: ActionCreatorWithPayload<string>;
+	disconnect: ActionCreatorWithoutPayload;
+	onError: ActionCreatorWithPayload<string>;
+	onMessage: ActionCreatorWithPayload<R>;
+};
 
-export const socketMiddleware = <R>(wsActions: TWsActionTypes<R>, withTokenRefresh: boolean = false): Middleware<NonNullable<unknown>, RootState> => {
-    return store => {
-        let socket: WebSocket | null = null;
-        const {
-            connect,
-            disconnect,
-            onError,
-            onMessage
-        } = wsActions;
+export const socketMiddleware = <R>(
+	wsActions: TWsActionTypes<R>,
+	withTokenRefresh = false
+): Middleware<NonNullable<unknown>, RootState> => {
+	return (store) => {
+		let socket: WebSocket | null = null;
+		const { connect, disconnect, onError, onMessage } = wsActions;
 
-        return next => action => {
-            const { dispatch } = store;
-            let url = "";
+		return (next) => (action) => {
+			const { dispatch } = store;
+			const url = '';
 
-            if (connect.match(action)) {
-                socket = new WebSocket(action.payload);
+			if (connect.match(action)) {
+				socket = new WebSocket(action.payload);
 
-                socket.onmessage = (e) => {
-                    const { data } = e;
+				socket.onmessage = (e) => {
+					const { data } = e;
 
-                    try {
-                        const parsedData = JSON.parse(data);
+					try {
+						const parsedData = JSON.parse(data);
 
-                        if (withTokenRefresh && parsedData.message === "Invalid or missing token") {
-                            refreshToken()
-                                .then(refreshData => {
-                                    const wssUrl = new URL(url);
-                                    wssUrl.searchParams.set(
-                                        "token",
-                                        refreshData.accessToken.replace("Bearer ", "")
-                                    );
-                                    dispatch(connect(wssUrl.toString()));
-                                })
-                                .catch(err => {
-                                    dispatch(onError((err as Error).message))
-                                })
+						if (
+							withTokenRefresh &&
+							parsedData.message === 'Invalid or missing token'
+						) {
+							refreshToken()
+								.then((refreshData) => {
+									const wssUrl = new URL(url);
+									wssUrl.searchParams.set(
+										'token',
+										refreshData.accessToken.replace('Bearer ', '')
+									);
+									dispatch(connect(wssUrl.toString()));
+								})
+								.catch((err) => {
+									dispatch(onError((err as Error).message));
+								});
 
-                            dispatch(disconnect());
+							dispatch(disconnect());
 
-                            return;
-                        }
+							return;
+						}
 
-                        dispatch(onMessage(parsedData));
-                    } catch (err) {
-                        dispatch(onError((err as Error).message));
-                    }
-                }
+						dispatch(onMessage(parsedData));
+					} catch (err) {
+						dispatch(onError((err as Error).message));
+					}
+				};
 
-                if (socket && disconnect.match(action)) {
-                    socket.close();
-                    socket = null;
-                }
-            }
+				if (socket && disconnect.match(action)) {
+					socket.close();
+					socket = null;
+				}
+			}
 
-            next(action);
-        }
-    }
-}
+			next(action);
+		};
+	};
+};

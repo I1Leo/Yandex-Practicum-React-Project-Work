@@ -26,7 +26,7 @@ export const getOrder = createAsyncThunk(
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: localStorage.getItem('accessToken') ?? ''
+				authorization: localStorage.getItem('accessToken') ?? '',
 			},
 			body: JSON.stringify({ ingredients: ingredientsIds }),
 		})
@@ -39,7 +39,7 @@ export const getOrder = createAsyncThunk(
 
 export const getOrderByNumber = createAsyncThunk(
 	'getOrderByNumber',
-	async (url : string) => {
+	async (url: string) => {
 		const response = await fetch(url, {
 			method: 'GET',
 			headers: {
@@ -57,26 +57,27 @@ export const login = createAsyncThunk('auth/login', api.login);
 
 export const logout = createAsyncThunk('auth/logout', api.logout);
 
-export const setUser = createAction <TUser, "auth/setUser">("auth/setUser");
+export const setUser = createAction<TUser, 'auth/setUser'>('auth/setUser');
 
 export const checkUserAuth = createAsyncThunk(
-    "auth/checkUserAuth",
-    async (_, { dispatch }) => {
-        if (localStorage.getItem("accessToken")) {
-            api.getUser()
-                .then(user => {
-						dispatch(setUser(user.user))
-					 })
-                .finally(() => dispatch(setIsAuthChecked(true)));
-        } else {
-            dispatch(setIsAuthChecked(true));
-        }
-    }
-)
+	'auth/checkUserAuth',
+	async (_, { dispatch }) => {
+		if (localStorage.getItem('accessToken')) {
+			api
+				.getUser()
+				.then((user) => {
+					dispatch(setUser(user.user));
+				})
+				.finally(() => dispatch(setIsAuthChecked(true)));
+		} else {
+			dispatch(setIsAuthChecked(true));
+		}
+	}
+);
 
 export const updateUser = createAsyncThunk(
-	"auth/updateUser",
+	'auth/updateUser',
 	async (form: TForm) => {
 		return api.updateUser(form);
 	}
-)
+);

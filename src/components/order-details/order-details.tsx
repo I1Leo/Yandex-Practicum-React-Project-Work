@@ -2,12 +2,14 @@ import DoneIcon from '../../images/done-icon.png';
 import s from './order-details.module.scss';
 import { useAppSelector } from '../../hooks';
 
-export default function OrderDetails() : JSX.Element {
+export default function OrderDetails(): JSX.Element {
 	const { order } = useAppSelector((state) => state.root.orderDetails);
 
 	return (
 		<>
-			<p className={`${s.order_number} text text_type_digits-large pt-15 pb-8`}>
+			<p
+				data-testid='order-number'
+				className={`${s.order_number} text text_type_digits-large pt-15 pb-8`}>
 				{order}
 			</p>
 			<p className='text text_type_main-medium pb-15'>идентификатор заказа</p>

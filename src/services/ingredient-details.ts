@@ -6,7 +6,7 @@ type TInitialState = {
 	isIngredientDetailsModalActive: boolean;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	ingredientDetails: null,
 	isIngredientDetailsModalActive: false,
 };
@@ -26,3 +26,9 @@ export const ingredientDetailsSlice = createSlice({
 		},
 	},
 });
+
+export const {
+	getIngredientDetails,
+	activateIngredientsDetailsModal,
+	deactivateIngredientsDetailsModal,
+} = ingredientDetailsSlice.actions;

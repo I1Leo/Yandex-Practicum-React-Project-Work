@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { RefObject } from 'react';
 
 export type TIngredients = {
 	_id: string;
@@ -15,7 +15,7 @@ export type TIngredients = {
 	__v: number;
 };
 
-export type TBurgerIngredientsSection= {
+export type TBurgerIngredientsSection = {
 	ingredient: Array<TIngredients>;
 	sectionRef: RefObject<HTMLDivElement>;
 };
@@ -25,7 +25,7 @@ export type TBurgerIngredientsItem = {
 };
 
 export type TConstructorIngredient = TIngredients & {
-	key?: string
+	key?: string;
 };
 
 export type TBurgerConstructorItem = {
@@ -36,11 +36,11 @@ export type TBurgerConstructorItem = {
 };
 
 export type TIngredientDetails = {
-	isTitle?: boolean
-}
+	isTitle?: boolean;
+};
 
 export type IngredientCircle = {
-   ingredient?: TIngredients,
-   index?: number,
-   restIngredients?: number;
-}
+	ingredient?: TIngredients;
+	index?: number;
+	restIngredients?: number;
+};

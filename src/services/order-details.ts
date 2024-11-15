@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { getOrder } from './api';
 
-type TInitialState= {
+type TInitialState = {
 	orderRequest: boolean;
 	orderFailed: boolean;
 	order: string | null;
 	isOrderDetailsModalActive: boolean;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	orderRequest: false,
 	orderFailed: false,
 	order: null,
@@ -42,3 +42,8 @@ export const orderDetailsSlice = createSlice({
 			});
 	},
 });
+
+export const { activateOrderDetailsModal, deactivateOrderDetailsModal } =
+	orderDetailsSlice.actions;
+
+export { getOrder };

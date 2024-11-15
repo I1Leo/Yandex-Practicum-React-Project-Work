@@ -9,13 +9,12 @@ import { useAppSelector } from '../../../hooks';
 import { Link, useLocation } from 'react-router-dom';
 import { TBurgerIngredientsItem, TIngredients } from '../../types/ingredients';
 
-
 export default function BurgeringredientsItem({
 	ingredient,
-}: TBurgerIngredientsItem) : JSX.Element {
+}: TBurgerIngredientsItem): JSX.Element {
 	const { bun, constructorIngredients } = useAppSelector(
 		(state) => state.root.constructorIngredients
-	);;
+	);
 
 	const location = useLocation();
 
@@ -27,23 +26,24 @@ export default function BurgeringredientsItem({
 		}),
 	});
 
-
 	const amount = useMemo(() => {
 		if (bun) {
 			return [bun, ...constructorIngredients, bun].filter(
-				(item : TIngredients) : boolean => item.name === ingredient.name
+				(item: TIngredients): boolean => item.name === ingredient.name
 			).length;
 		} else {
 			return [...constructorIngredients].filter(
-				(item : TIngredients) : boolean => item.name === ingredient.name
+				(item: TIngredients): boolean => item.name === ingredient.name
 			).length;
 		}
 	}, [constructorIngredients, bun]);
 
 	return (
-		<li className={s.item} ref={dragRef}>
-			<Link key={ingredient._id}
-			to={`/ingredients/${ingredient._id}`} state={{background: location}}>
+		<li data-testid={ingredient._id} className={s.item} ref={dragRef}>
+			<Link
+				key={ingredient._id}
+				to={`/ingredients/${ingredient._id}`}
+				state={{ background: location }}>
 				<button>
 					{amount > 0 && (
 						<Counter count={amount} size='default' extraClass='m-1' />
@@ -62,7 +62,6 @@ export default function BurgeringredientsItem({
 					</p>
 				</button>
 			</Link>
-
 		</li>
 	);
 }

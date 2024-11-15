@@ -1,6 +1,4 @@
-
-
 export type TOrdersInfo = {
-   isModal?: boolean;
-   type: "feed" | "profile"
-}
+	isModal?: boolean;
+	type: 'feed' | 'profile';
+};

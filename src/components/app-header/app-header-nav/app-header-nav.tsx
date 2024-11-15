@@ -4,9 +4,8 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks';
 
-export default function AppHeaderNav() : JSX.Element {
-	
-	let user = useAppSelector(state => state.root.auth.user);
+export default function AppHeaderNav(): JSX.Element {
+	const user = useAppSelector((state) => state.root.auth.user);
 
 	const navigate = useNavigate();
 
@@ -14,7 +13,7 @@ export default function AppHeaderNav() : JSX.Element {
 		<nav className={s.nav}>
 			<ul className={s.list}>
 				<li>
-					<NavLink to="/" >
+					<NavLink to='/'>
 						{({ isActive }) => (
 							<AppHeaderItem
 								isActive={isActive}
@@ -25,7 +24,7 @@ export default function AppHeaderNav() : JSX.Element {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to="/feed">
+					<NavLink to='/feed'>
 						{({ isActive }) => (
 							<AppHeaderItem
 								isActive={isActive}
@@ -34,15 +33,14 @@ export default function AppHeaderNav() : JSX.Element {
 							/>
 						)}
 					</NavLink>
-
 				</li>
 				<li className={s.logo_item}>
-					<button onClick={() => navigate("/")}>
+					<button onClick={() => navigate('/')}>
 						<Logo />
 					</button>
 				</li>
-				<li> 
-					<NavLink to="/profile">
+				<li>
+					<NavLink to='/profile'>
 						{({ isActive }) => (
 							<AppHeaderItem
 								isActive={isActive}
@@ -50,9 +48,7 @@ export default function AppHeaderNav() : JSX.Element {
 								text={user ? user.name : 'Личный кабинет'}
 							/>
 						)}
-
 					</NavLink>
-
 				</li>
 			</ul>
 		</nav>
